@@ -50,6 +50,45 @@ body { min-height: 100vh; }
 
 .app { max-width: 480px; margin: 0 auto; background: var(--surface); min-height: 100vh; position: relative; box-shadow: 0 0 40px rgba(0,0,0,0.08); }
 
+/* ── Desktop: 2カラムレイアウト ── */
+@media (min-width: 860px) {
+  body { display: flex; align-items: flex-start; justify-content: center; padding: 0; }
+  .app {
+    max-width: 1280px; width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    grid-template-rows: auto auto auto 1fr;
+    grid-template-areas:
+      "header   header"
+      "player   sidebar"
+      "nowplay  sidebar"
+      "filler   sidebar";
+    min-height: 100vh;
+    box-shadow: 0 0 60px rgba(0,0,0,0.15);
+  }
+  .header      { grid-area: header; }
+  .player-wrap { grid-area: player; aspect-ratio: unset; min-height: 400px; }
+  .now-playing { grid-area: nowplay; border-right: 1px solid var(--dark2); border-bottom: none; }
+  .desktop-filler { grid-area: filler; background: var(--surface2); border-right: 1px solid var(--border); }
+  .desktop-sidebar {
+    grid-area: sidebar;
+    display: flex; flex-direction: column;
+    height: 100vh;
+    position: sticky; top: 0;
+    border-left: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .tab-bar { position: static; flex-shrink: 0; }
+  .tab-content { flex: 1; overflow-y: auto; }
+  .tab-content.active { display: flex; flex-direction: column; }
+  .search-bar { flex-shrink: 0; }
+  .filter-row { flex-shrink: 0; }
+  .video-list { padding-bottom: 20px; }
+  /* PC向けカード少し大きく */
+  .thumb { width: 140px; height: 79px; }
+  .card-title { font-size: 14px; }
+}
+
 /* Header */
 .header {
   background: linear-gradient(135deg, #0d0d1f 0%, #1a1a3e 60%, #0f2050 100%);
@@ -225,6 +264,12 @@ body { min-height: 100vh; }
     動画リストの読み込みに失敗しました。ページを再読み込みしてください。
   </div>
 
+  <!-- Desktop filler (left column bottom) -->
+  <div class="desktop-filler"></div>
+
+  <!-- Sidebar (right column on desktop, normal flow on mobile) -->
+  <div class="desktop-sidebar">
+
   <!-- Tabs -->
   <div class="tab-bar">
     <div class="tab active" onclick="switchTab('list')">動画一覧</div>
@@ -280,6 +325,8 @@ body { min-height: 100vh; }
       </div>
     </div>
   </div>
+
+  </div><!-- /.desktop-sidebar -->
 
 </div>
 
