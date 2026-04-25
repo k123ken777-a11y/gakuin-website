@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+<title>🏀 浜松学院興誠中学校 バスケ動画</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #f5f5f5;
+  --surface: #ffffff;
+  --surface2: #f0f0f0;
+  --border: rgba(0,0,0,0.1);
+  --border2: rgba(0,0,0,0.18);
+  --text: #1a1a1a;
+  --text2: #666;
+  --text3: #999;
+  --orange: #f97316;
+  --orange-light: #fff3e8;
+  --orange-text: #c2510a;
+  --blue-light: #e8f0ff;
+  --blue-text: #2952a3;
+  --dark: #1a1a2e;
+  --dark2: #2d2d4e;
+  --radius: 10px;
+  --radius-sm: 6px;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #111118;
+    --surface: #1c1c28;
+    --surface2: #252535;
+    --border: rgba(255,255,255,0.08);
+    --border2: rgba(255,255,255,0.15);
+    --text: #f0f0f0;
+    --text2: #aaa;
+    --text3: #666;
+    --orange-light: #2d1a0a;
+    --orange-text: #f97316;
+    --blue-light: #0d1a35;
+    --blue-text: #7aaaf0;
+    --dark: #0f0f1e;
+    --dark2: #1e1e38;
+  }
+}
+html { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sans JP', sans-serif; background: var(--bg); color: var(--text); }
+body { min-height: 100vh; }
+
+.app { max-width: 480px; margin: 0 auto; background: var(--surface); min-height: 100vh; position: relative; box-shadow: 0 0 40px rgba(0,0,0,0.08); }
+
+/* Header */
+.header {
+  background: linear-gradient(135deg, #0d0d1f 0%, #1a1a3e 60%, #0f2050 100%);
+  padding: 14px 16px 12px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: relative; overflow: hidden;
+}
+.header::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    -45deg, transparent, transparent 18px,
+    rgba(249,115,22,0.04) 18px, rgba(249,115,22,0.04) 19px
+  );
+  pointer-events: none;
+}
+.header-left { position: relative; z-index: 1; }
+.header-school {
+  font-family: 'Noto Sans JP', sans-serif;
+  color: rgba(255,255,255,0.55);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  margin-bottom: 3px;
+}
+.header-title {
+  display: flex; align-items: center; gap: 8px;
+}
+.header-title-text {
+  font-family: 'Bebas Neue', 'Noto Sans JP', sans-serif;
+  color: #fff;
+  font-size: 28px;
+  letter-spacing: 2px;
+  line-height: 1;
+}
+.header-ball { font-size: 22px; line-height: 1; }
+.header-accent {
+  display: flex; align-items: center; gap: 6px; margin-top: 4px;
+}
+.header-line {
+  height: 1px; width: 22px; background: var(--orange); opacity: 0.7;
+}
+.header-sub {
+  color: var(--orange);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+.header-count {
+  background: var(--orange); color: #fff; font-size: 11px; font-weight: 700;
+  padding: 5px 11px; border-radius: 20px; position: relative; z-index: 1;
+  box-shadow: 0 2px 8px rgba(249,115,22,0.4);
+}
+
+/* Player */
+.player-wrap { background: #000; aspect-ratio: 16/9; position: relative; }
+.player-wrap iframe { width: 100%; height: 100%; border: none; display: none; }
+.player-placeholder { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; color: #444; }
+.play-circle { width: 60px; height: 60px; border-radius: 50%; border: 2px solid #333; display: flex; align-items: center; justify-content: center; }
+.play-circle svg { width: 24px; height: 24px; fill: #444; margin-left: 3px; }
+.placeholder-text { font-size: 13px; color: #555; }
+
+/* Now playing */
+.now-playing { background: var(--dark); padding: 10px 16px; border-bottom: 1px solid var(--dark2); display: none; }
+.np-label { color: var(--orange); font-size: 10px; font-weight: 600; letter-spacing: 0.6px; }
+.np-title { color: #fff; font-size: 14px; margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.np-meta { color: #888; font-size: 11px; margin-top: 2px; }
+
+/* Tabs */
+.tab-bar { display: flex; background: var(--surface); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 20; }
+.tab { flex: 1; padding: 12px 4px; text-align: center; font-size: 12px; color: var(--text2); cursor: pointer; border-bottom: 2px solid transparent; transition: color 0.15s, border-color 0.15s; user-select: none; }
+.tab.active { color: var(--orange); border-bottom-color: var(--orange); font-weight: 600; }
+
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* Search */
+.search-bar { padding: 10px 16px; border-bottom: 1px solid var(--border); }
+.search-wrap { position: relative; }
+.search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); width: 15px; height: 15px; opacity: 0.35; pointer-events: none; }
+.search-input {
+  width: 100%; background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 20px; padding: 9px 14px 9px 36px; font-size: 13px;
+  color: var(--text); outline: none;
+}
+.search-input::placeholder { color: var(--text3); }
+.search-input:focus { border-color: var(--orange); }
+
+/* Filter chips */
+.filter-row { display: flex; gap: 6px; padding: 8px 16px; overflow-x: auto; scrollbar-width: none; border-bottom: 1px solid var(--border); }
+.filter-row::-webkit-scrollbar { display: none; }
+.chip { background: var(--surface2); border: 1px solid var(--border); border-radius: 20px; padding: 5px 13px; font-size: 12px; color: var(--text2); cursor: pointer; white-space: nowrap; flex-shrink: 0; transition: all 0.15s; user-select: none; }
+.chip.active { background: var(--orange); border-color: var(--orange); color: #fff; font-weight: 600; }
+
+/* Video cards */
+.video-list { padding-bottom: 80px; }
+.video-card { display: flex; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--border); cursor: pointer; align-items: flex-start; transition: background 0.1s; }
+.video-card:active { background: var(--surface2); }
+.thumb { width: 120px; height: 68px; border-radius: var(--radius-sm); background: var(--dark); flex-shrink: 0; overflow: hidden; position: relative; }
+.thumb img { width: 100%; height: 100%; object-fit: cover; }
+.thumb-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.25); }
+.thumb-overlay svg { width: 22px; height: 22px; fill: rgba(255,255,255,0.9); margin-left: 3px; }
+.card-body { flex: 1; min-width: 0; }
+.card-top { display: flex; align-items: flex-start; gap: 4px; }
+.card-title { font-size: 13px; font-weight: 500; color: var(--text); line-height: 1.35; flex: 1; }
+.fav-btn { background: none; border: none; cursor: pointer; font-size: 17px; flex-shrink: 0; padding: 0; line-height: 1; transition: transform 0.15s; }
+.fav-btn:active { transform: scale(1.3); }
+.card-meta { font-size: 11px; color: var(--text2); margin-top: 4px; }
+.badges { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 5px; }
+.badge { display: inline-block; font-size: 9px; font-weight: 600; padding: 2px 7px; border-radius: 10px; letter-spacing: 0.3px; }
+.badge-tag { background: var(--orange-light); color: var(--orange-text); }
+.badge-team { background: var(--blue-light); color: var(--blue-text); }
+
+/* Empty */
+.empty-state { text-align: center; padding: 48px 24px; color: var(--text3); font-size: 13px; line-height: 1.9; }
+.empty-icon { font-size: 40px; display: block; margin-bottom: 10px; }
+
+/* Loading */
+.loading { text-align: center; padding: 40px; color: var(--text3); font-size: 13px; }
+.spinner { width: 28px; height: 28px; border: 3px solid var(--border2); border-top-color: var(--orange); border-radius: 50%; animation: spin 0.7s linear infinite; margin: 0 auto 12px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Info panel */
+.info-panel { padding: 20px 16px; }
+.info-card { background: var(--surface2); border-radius: var(--radius); padding: 16px; margin-bottom: 12px; }
+.info-card h3 { font-size: 14px; font-weight: 600; margin-bottom: 8px; color: var(--text); }
+.info-card p { font-size: 12px; color: var(--text2); line-height: 1.7; }
+.info-card code { background: var(--border); padding: 2px 6px; border-radius: 4px; font-family: monospace; font-size: 11px; }
+.info-badge { display: inline-block; background: var(--orange-light); color: var(--orange-text); font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 10px; margin-bottom: 8px; }
+
+/* Error banner */
+.error-banner { background: #ffeaea; border-left: 3px solid #e24b4a; padding: 10px 16px; font-size: 12px; color: #a32d2d; display: none; }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-left">
+      <div class="header-school">浜松学院興誠中学校</div>
+      <div class="header-title">
+        <span class="header-ball">🏀</span>
+        <span class="header-title-text">BASKETBALL</span>
+      </div>
+      <div class="header-accent">
+        <div class="header-line"></div>
+        <div class="header-sub">MOVIE ARCHIVE</div>
+      </div>
+    </div>
+    <div class="header-count" id="headerCount">読込中…</div>
+  </div>
+
+  <!-- Player -->
+  <div class="player-wrap">
+    <iframe id="ytPlayer" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+    <div class="player-placeholder" id="placeholder">
+      <div class="play-circle"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+      <span class="placeholder-text">動画を選んで再生</span>
+    </div>
+  </div>
+
+  <!-- Now playing -->
+  <div class="now-playing" id="nowPlaying">
+    <div class="np-label">▶ 再生中</div>
+    <div class="np-title" id="npTitle"></div>
+    <div class="np-meta" id="npMeta"></div>
+  </div>
+
+  <!-- Error -->
+  <div class="error-banner" id="errorBanner">
+    動画リストの読み込みに失敗しました。ページを再読み込みしてください。
+  </div>
+
+  <!-- Tabs -->
+  <div class="tab-bar">
+    <div class="tab active" onclick="switchTab('list')">動画一覧</div>
+    <div class="tab" onclick="switchTab('fav')">⭐ お気に入り</div>
+    <div class="tab" onclick="switchTab('info')">ℹ 使い方</div>
+  </div>
+
+  <!-- List tab -->
+  <div id="tabList" class="tab-content active">
+    <div class="search-bar">
+      <div class="search-wrap">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+        </svg>
+        <input class="search-input" id="searchInput" placeholder="タイトル・チームで検索…" oninput="renderList()" />
+      </div>
+    </div>
+    <div class="filter-row" id="filterRow"></div>
+    <div class="video-list" id="videoList">
+      <div class="loading"><div class="spinner"></div>動画を読み込み中…</div>
+    </div>
+  </div>
+
+  <!-- Fav tab -->
+  <div id="tabFav" class="tab-content">
+    <div class="video-list" id="favList"></div>
+  </div>
+
+  <!-- Info tab -->
+  <div id="tabInfo" class="tab-content">
+    <div class="info-panel">
+      <div class="info-card">
+        <div class="info-badge">メンバーの方へ</div>
+        <h3>お気に入りの保存について</h3>
+        <p>⭐ マークをタップするとお気に入りに登録できます。お気に入りはこのブラウザだけに保存されるため、自分専用のリストを作れます。</p>
+      </div>
+      <div class="info-card">
+        <div class="info-badge">管理者の方へ</div>
+        <h3>動画の追加・削除方法</h3>
+        <p>リポジトリ内の <code>videos.json</code> を編集してください。以下の形式で動画を追加できます：</p>
+        <pre style="margin-top:10px;background:var(--border);padding:10px;border-radius:6px;font-size:11px;overflow-x:auto;line-height:1.6;">{
+  "id": "YouTubeの動画ID",
+  "title": "動画タイトル",
+  "date": "2025-04-25",
+  "tag": "試合",
+  "team": "Aチーム"
+}</pre>
+        <p style="margin-top:8px;">YouTubeの動画IDはURLの <code>v=</code> の後の11文字です。<br>例: <code>youtube.com/watch?v=<strong>dQw4w9WgXcQ</strong></code></p>
+      </div>
+      <div class="info-card">
+        <h3>対応カテゴリ（tag）</h3>
+        <p>試合 / 練習 / ハイライト / トーナメント<br>（自由に文字列を設定できます）</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ─── State ───────────────────────────────────────────────
+let videos = [];
+let favs = {};
+let selCategory = 'すべて';
+
+// Load favourites from localStorage (per-user)
+try { favs = JSON.parse(localStorage.getItem('bk_favs') || '{}'); } catch(e) {}
+
+function saveFavs() { try { localStorage.setItem('bk_favs', JSON.stringify(favs)); } catch(e) {} }
+
+// ─── Helpers ─────────────────────────────────────────────
+function esc(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function getTeams() {
+  const teams = ['すべて', '⭐ お気に入り'];
+  videos.forEach(v => { if (v.team && !teams.includes(v.team)) teams.push(v.team); });
+  return teams;
+}
+
+// ─── Fetch videos.json ───────────────────────────────────
+async function loadVideos() {
+  try {
+    const res = await fetch('videos.json?_=' + Date.now());
+    if (!res.ok) throw new Error('fetch failed');
+    videos = await res.json();
+    document.getElementById('headerCount').textContent = videos.length + '本';
+    renderFilters();
+    renderList();
+    renderFav();
+  } catch(e) {
+    document.getElementById('errorBanner').style.display = 'block';
+    document.getElementById('headerCount').textContent = '0本';
+    document.getElementById('videoList').innerHTML = '<div class="empty-state"><span class="empty-icon">⚠️</span>動画リストの読み込みに失敗しました。<br>ネットワーク接続を確認してください。</div>';
+  }
+}
+
+// ─── Render helpers ──────────────────────────────────────
+function renderFilters() {
+  document.getElementById('filterRow').innerHTML = getTeams().map(t =>
+    `<div class="chip${selCategory===t?' active':''}" onclick="setFilter(this,'${esc(t)}')">${esc(t)}</div>`
+  ).join('');
+}
+
+function setFilter(el, t) {
+  selCategory = t;
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  renderList();
+}
+
+function filteredVideos() {
+  const q = (document.getElementById('searchInput')?.value || '').toLowerCase();
+  return videos.filter(v => {
+    const isFav = favs[v.id];
+    if (selCategory === '⭐ お気に入り' && !isFav) return false;
+    if (selCategory !== 'すべて' && selCategory !== '⭐ お気に入り' && v.team !== selCategory) return false;
+    if (q && !v.title.toLowerCase().includes(q) && !(v.team||'').toLowerCase().includes(q)) return false;
+    return true;
+  });
+}
+
+function cardHtml(v) {
+  const isFav = !!favs[v.id];
+  return `<div class="video-card" onclick="playVideo('${esc(v.id)}','${esc(v.title)}','${esc(v.date||'')}','${esc(v.team||'')}','${esc(v.tag||'')}')">
+    <div class="thumb">
+      <img src="https://img.youtube.com/vi/${esc(v.id)}/mqdefault.jpg" alt="" loading="lazy" onerror="this.style.display='none'" />
+      <div class="thumb-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+    </div>
+    <div class="card-body">
+      <div class="card-top">
+        <div class="card-title">${esc(v.title)}</div>
+        <button class="fav-btn" onclick="event.stopPropagation();toggleFav('${esc(v.id)}')" aria-label="お気に入り">${isFav?'⭐':'☆'}</button>
+      </div>
+      <div class="card-meta">${esc(v.date||'')}${v.team?' · '+esc(v.team):''}</div>
+      <div class="badges">
+        ${v.tag?`<span class="badge badge-tag">${esc(v.tag)}</span>`:''}
+        ${v.team?`<span class="badge badge-team">${esc(v.team)}</span>`:''}
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderList() {
+  const list = filteredVideos();
+  const el = document.getElementById('videoList');
+  el.innerHTML = list.length
+    ? list.map(cardHtml).join('')
+    : '<div class="empty-state"><span class="empty-icon">🔍</span>動画が見つかりません。<br>検索条件を変えてみてください。</div>';
+}
+
+function renderFav() {
+  const favVideos = videos.filter(v => favs[v.id]);
+  const el = document.getElementById('favList');
+  el.innerHTML = favVideos.length
+    ? favVideos.map(cardHtml).join('')
+    : '<div class="empty-state"><span class="empty-icon">⭐</span>お気に入りはまだありません。<br>動画一覧の ☆ をタップして追加してください。</div>';
+}
+
+// ─── Actions ─────────────────────────────────────────────
+function playVideo(id, title, date, team, tag) {
+  const player = document.getElementById('ytPlayer');
+  player.src = `https://www.youtube.com/embed/${id}?autoplay=1`;
+  player.style.display = 'block';
+  document.getElementById('placeholder').style.display = 'none';
+  const np = document.getElementById('nowPlaying');
+  np.style.display = 'block';
+  document.getElementById('npTitle').textContent = title;
+  document.getElementById('npMeta').textContent = [date, team, tag].filter(Boolean).join(' · ');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function toggleFav(id) {
+  if (favs[id]) { delete favs[id]; } else { favs[id] = true; }
+  saveFavs();
+  renderList();
+  renderFav();
+}
+
+function switchTab(name) {
+  ['list','fav','info'].forEach(t => {
+    document.getElementById('tab'+t.charAt(0).toUpperCase()+t.slice(1)).classList.toggle('active', t===name);
+  });
+  document.querySelectorAll('.tab').forEach((t,i) => {
+    t.classList.toggle('active', ['list','fav','info'][i]===name);
+  });
+}
+
+// ─── Boot ─────────────────────────────────────────────────
+loadVideos();
+</script>
+</body>
+</html>
