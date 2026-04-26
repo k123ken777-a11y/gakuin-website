@@ -57,18 +57,23 @@ body { min-height: 100vh; }
     max-width: 1280px; width: 100%;
     display: grid;
     grid-template-columns: 1fr 420px;
-    grid-template-rows: auto auto auto 1fr;
+    grid-template-rows: auto 1fr auto auto;
     grid-template-areas:
       "header   header"
       "player   sidebar"
       "nowplay  sidebar"
       "filler   sidebar";
-    min-height: 100vh;
+    height: 100vh;
+    overflow: hidden;
     box-shadow: 0 0 60px rgba(0,0,0,0.15);
   }
-  .header      { grid-area: header; }
-  .player-wrap { grid-area: player; aspect-ratio: unset; min-height: 400px; }
-  .now-playing { grid-area: nowplay; border-right: 1px solid var(--dark2); border-bottom: none; }
+  .header      { grid-area: header; flex-shrink: 0; }
+  .player-wrap {
+    grid-area: player;
+    aspect-ratio: unset;
+    width: 100%; height: 100%;
+  }
+  .now-playing { grid-area: nowplay; border-right: 1px solid var(--dark2); border-bottom: none; flex-shrink: 0; }
   .desktop-filler { grid-area: filler; background: var(--surface2); border-right: 1px solid var(--border); }
   .desktop-sidebar {
     grid-area: sidebar;
@@ -84,9 +89,17 @@ body { min-height: 100vh; }
   .search-bar { flex-shrink: 0; }
   .filter-row { flex-shrink: 0; }
   .video-list { padding-bottom: 20px; }
-  /* PC向けカード少し大きく */
+  /* PC向けヘッダー */
+  .header-school { font-size: 11px; letter-spacing: 3px; }
+  .header-title-text { font-size: 36px; }
+  .header-ball { font-size: 28px; }
+  .header-sub { font-size: 12px; }
+  /* PC向けカード */
   .thumb { width: 140px; height: 79px; }
   .card-title { font-size: 14px; }
+  /* PC向けバウンドボール大きく */
+  .placeholder-ball { width: 100px; height: 100px; }
+  .placeholder-play-btn svg { width: 36px; height: 36px; }
 }
 
 /* Header */
@@ -145,12 +158,65 @@ body { min-height: 100vh; }
 }
 
 /* Player */
-.player-wrap { background: #000; aspect-ratio: 16/9; position: relative; }
+.player-wrap { background: #0a0a18; aspect-ratio: 16/9; position: relative; overflow: hidden; }
 .player-wrap iframe { width: 100%; height: 100%; border: none; display: none; }
-.player-placeholder { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; color: #444; }
-.play-circle { width: 60px; height: 60px; border-radius: 50%; border: 2px solid #333; display: flex; align-items: center; justify-content: center; }
-.play-circle svg { width: 24px; height: 24px; fill: #444; margin-left: 3px; }
-.placeholder-text { font-size: 13px; color: #555; }
+.player-placeholder {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;
+  background: radial-gradient(ellipse at 60% 40%, #1a1a40 0%, #0a0a18 70%);
+}
+/* court lines decoration */
+.player-placeholder::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 120px 120px at 50% 50%, transparent 58px, rgba(255,255,255,0.04) 59px, rgba(255,255,255,0.04) 61px, transparent 62px),
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 100% 100%, 40px 40px, 40px 40px;
+  pointer-events: none;
+}
+.placeholder-inner { display: flex; flex-direction: column; align-items: center; gap: 14px; position: relative; z-index: 1; }
+.placeholder-ball {
+  width: 80px; height: 80px;
+  background: radial-gradient(circle at 35% 35%, #ff9a4a, #f97316 50%, #c2510a);
+  border-radius: 50%;
+  position: relative;
+  box-shadow: 0 8px 32px rgba(249,115,22,0.45), inset -6px -6px 16px rgba(0,0,0,0.3);
+  animation: float 3s ease-in-out infinite;
+}
+/* basketball lines */
+.placeholder-ball::before, .placeholder-ball::after { content: ''; position: absolute; border-radius: 50%; }
+.placeholder-ball::before {
+  inset: -2px; border: 1.5px solid rgba(0,0,0,0.35); border-radius: 50%;
+}
+.placeholder-ball::after {
+  width: 100%; height: 100%;
+  background:
+    linear-gradient(rgba(0,0,0,0) 47%, rgba(0,0,0,0.35) 47%, rgba(0,0,0,0.35) 53%, rgba(0,0,0,0) 53%),
+    linear-gradient(90deg, rgba(0,0,0,0) 47%, rgba(0,0,0,0.35) 47%, rgba(0,0,0,0.35) 53%, rgba(0,0,0,0) 53%);
+  border-radius: 50%;
+}
+.placeholder-play-btn {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+}
+.placeholder-play-btn svg { width: 28px; height: 28px; fill: rgba(255,255,255,0.9); margin-left: 4px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4)); }
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+.placeholder-text { font-size: 13px; color: rgba(255,255,255,0.45); letter-spacing: 0.5px; }
+.placeholder-shadow {
+  width: 50px; height: 8px;
+  background: rgba(249,115,22,0.25);
+  border-radius: 50%;
+  margin-top: -10px;
+  animation: shadow 3s ease-in-out infinite;
+}
+@keyframes shadow {
+  0%, 100% { transform: scaleX(1); opacity: 0.4; }
+  50% { transform: scaleX(0.6); opacity: 0.15; }
+}
 
 /* Now playing */
 .now-playing { background: var(--dark); padding: 10px 16px; border-bottom: 1px solid var(--dark2); display: none; }
@@ -247,8 +313,15 @@ body { min-height: 100vh; }
   <div class="player-wrap">
     <iframe id="ytPlayer" allowfullscreen allow="autoplay; encrypted-media"></iframe>
     <div class="player-placeholder" id="placeholder">
-      <div class="play-circle"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-      <span class="placeholder-text">動画を選んで再生</span>
+      <div class="placeholder-inner">
+        <div class="placeholder-ball">
+          <div class="placeholder-play-btn">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+        <div class="placeholder-shadow"></div>
+        <span class="placeholder-text">動画を選んで再生</span>
+      </div>
     </div>
   </div>
 
