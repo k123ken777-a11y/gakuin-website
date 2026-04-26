@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192">
+  <defs>
+    <!-- 背景グラデーション（紺→濃紺） -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e2a5e"/>
+      <stop offset="100%" stop-color="#0d1230"/>
+    </linearGradient>
+    <!-- ボールグラデーション -->
+    <radialGradient id="ballGrad" cx="38%" cy="30%" r="60%">
+      <stop offset="0%" stop-color="#ffd080"/>
+      <stop offset="40%" stop-color="#f97316"/>
+      <stop offset="100%" stop-color="#9a3800"/>
+    </radialGradient>
+    <!-- ボール光沢 -->
+    <radialGradient id="shine" cx="35%" cy="28%" r="40%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.45)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    </radialGradient>
+    <!-- コートライン光 -->
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- 角丸背景 -->
+  <rect width="192" height="192" rx="42" fill="url(#bgGrad)"/>
+
+  <!-- コート模様（背景） -->
+  <!-- コートの外枠 -->
+  <rect x="16" y="100" width="160" height="76" rx="4"
+        fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1.5"/>
+  <!-- センターサークル -->
+  <circle cx="96" cy="138" r="22"
+          fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1.5"/>
+  <!-- センターライン -->
+  <line x1="16" y1="138" x2="176" y2="138"
+        stroke="rgba(255,255,255,0.08)" stroke-width="1.5"/>
+
+  <!-- バスケットゴール（リング） -->
+  <!-- ポール -->
+  <line x1="96" y1="88" x2="96" y2="108"
+        stroke="#e0e0e0" stroke-width="3" stroke-linecap="round"/>
+  <!-- バックボード -->
+  <rect x="74" y="83" width="44" height="28" rx="3"
+        fill="none" stroke="#e8e8e8" stroke-width="2.5"/>
+  <!-- 小さい四角（シューティングボックス） -->
+  <rect x="82" y="89" width="28" height="16" rx="2"
+        fill="none" stroke="#e8e8e8" stroke-width="1.5"/>
+  <!-- リング -->
+  <ellipse cx="96" cy="113" rx="13" ry="4"
+           fill="none" stroke="#f97316" stroke-width="3"/>
+  <!-- ネット -->
+  <path d="M83 113 Q84 122 86 126 Q88 130 89 128 Q91 124 91 120"
+        fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="1.2"/>
+  <path d="M109 113 Q108 122 106 126 Q104 130 103 128 Q101 124 101 120"
+        fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="1.2"/>
+  <path d="M86 113 Q87 122 88 126" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="1.2"/>
+  <path d="M106 113 Q105 122 104 126" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="1.2"/>
+  <path d="M96 113 Q96 122 96 127" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="1.2"/>
+  <!-- ネット底 -->
+  <path d="M89 128 Q92 131 96 132 Q100 131 103 128"
+        fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="1.2"/>
+
+  <!-- バスケットボール本体 -->
+  <circle cx="96" cy="52" r="36" fill="url(#ballGrad)"/>
+
+  <!-- ボールのライン -->
+  <!-- 横ライン -->
+  <line x1="60" y1="52" x2="132" y2="52"
+        stroke="rgba(0,0,0,0.32)" stroke-width="2"/>
+  <!-- 縦ライン -->
+  <line x1="96" y1="16" x2="96" y2="88"
+        stroke="rgba(0,0,0,0.32)" stroke-width="2"/>
+  <!-- 左カーブ -->
+  <path d="M96 16 Q76 30 76 52 Q76 74 96 88"
+        fill="none" stroke="rgba(0,0,0,0.32)" stroke-width="2"/>
+  <!-- 右カーブ -->
+  <path d="M96 16 Q116 30 116 52 Q116 74 96 88"
+        fill="none" stroke="rgba(0,0,0,0.32)" stroke-width="2"/>
+
+  <!-- 光沢 -->
+  <circle cx="96" cy="52" r="36" fill="url(#shine)"/>
+
+  <!-- テキスト：PHOENIX（チームっぽく） -->
+  <text x="96" y="175" text-anchor="middle"
+        font-family="'Arial Black', 'Noto Sans JP', sans-serif"
+        font-size="13" font-weight="900"
+        fill="#f97316" letter-spacing="2">BASKETBALL</text>
+
+  <!-- 星の装飾 -->
+  <text x="22" y="60" font-size="11" fill="rgba(255,255,255,0.3)">★</text>
+  <text x="162" y="60" font-size="11" fill="rgba(255,255,255,0.3)">★</text>
+</svg>
