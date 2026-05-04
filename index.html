@@ -267,6 +267,10 @@ body { min-height: 100vh; }
   </div>
 
   <!-- Error -->
+  <div class="error-banner" id="errorBanner">
+    動画リストの読み込みに失敗しました。ページを再読み込みしてください。
+  </div>
+
   <!-- Desktop filler (left column bottom) -->
   <div class="desktop-filler"></div>
 
@@ -361,15 +365,14 @@ async function loadVideos() {
     const res = await fetch('videos.json?_=' + Date.now());
     if (!res.ok) throw new Error('fetch failed');
     videos = await res.json();
-    // 新しい日付順（降順）にソート
-    videos.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
     document.getElementById('headerCount').textContent = videos.length + '本';
     renderFilters();
     renderList();
     renderFav();
   } catch(e) {
-    document.getElementById('videoList').innerHTML = '<div class="empty-state"><span class="empty-icon">⚠️</span>動画リストの読み込みに失敗しました。<br>このファイルはGitHub Pages上で開いてください。<br>ローカルでは動作しません。</div>';
+    document.getElementById('errorBanner').style.display = 'block';
     document.getElementById('headerCount').textContent = '0本';
+    document.getElementById('videoList').innerHTML = '<div class="empty-state"><span class="empty-icon">⚠️</span>動画リストの読み込みに失敗しました。<br>ネットワーク接続を確認してください。</div>';
   }
 }
 
