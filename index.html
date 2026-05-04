@@ -365,6 +365,8 @@ async function loadVideos() {
     const res = await fetch('videos.json?_=' + Date.now());
     if (!res.ok) throw new Error('fetch failed');
     videos = await res.json();
+    // 新しい日付順（降順）にソート
+    videos.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
     document.getElementById('headerCount').textContent = videos.length + '本';
     renderFilters();
     renderList();
