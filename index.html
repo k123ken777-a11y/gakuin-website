@@ -187,8 +187,13 @@ body { min-height: 100vh; }
 .search-input:focus { border-color: var(--orange); }
 
 /* Filter chips */
-.filter-row { display: flex; flex-wrap: wrap; gap: 6px; padding: 8px 16px; border-bottom: 1px solid var(--border); }
-.chip { background: var(--surface2); border: 1px solid var(--border); border-radius: 20px; padding: 5px 13px; font-size: 12px; color: var(--text2); cursor: pointer; white-space: nowrap; transition: all 0.15s; user-select: none; }
+.filter-row {
+  display: flex; flex-wrap: nowrap; gap: 6px; padding: 8px 16px;
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none;
+}
+.filter-row::-webkit-scrollbar { display: none; }
+.chip { background: var(--surface2); border: 1px solid var(--border); border-radius: 20px; padding: 5px 13px; font-size: 12px; color: var(--text2); cursor: pointer; white-space: nowrap; flex-shrink: 0; transition: all 0.15s; user-select: none; }
 .chip.active { background: var(--orange); border-color: var(--orange); color: #fff; font-weight: 600; }
 
 /* Video cards */
@@ -287,7 +292,7 @@ body { min-height: 100vh; }
         <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
         </svg>
-        <input class="search-input" id="searchInput" placeholder="タイトル・チームで検索…" oninput="renderList()" />
+        <input class="search-input" id="searchInput" placeholder="相手チーム・大会名で検索…" oninput="renderList()" />
       </div>
     </div>
     <div class="filter-row" id="filterRow"></div>
@@ -349,10 +354,12 @@ function esc(s) {
   return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-function getTeams() {
-  const teams = ['すべて', '⭐ お気に入り'];
-  videos.forEach(v => { if (v.team && !teams.includes(v.team)) teams.push(v.team); });
-  return teams;
+// フィルターは大会カテゴリ（tag）単位。対戦相手はチームごとに増え続けるため、
+// 増え方の緩やかな tag を軸にして1行に収める。相手チームは検索バーで絞り込む。
+function getCategories() {
+  const cats = ['すべて', '⭐ お気に入り'];
+  videos.forEach(v => { if (v.tag && !cats.includes(v.tag)) cats.push(v.tag); });
+  return cats;
 }
 
 // ─── Fetch videos.json ───────────────────────────────────
@@ -375,7 +382,7 @@ async function loadVideos() {
 
 // ─── Render helpers ──────────────────────────────────────
 function renderFilters() {
-  document.getElementById('filterRow').innerHTML = getTeams().map(t =>
+  document.getElementById('filterRow').innerHTML = getCategories().map(t =>
     `<div class="chip${selCategory===t?' active':''}" onclick="setFilter(this,'${esc(t)}')">${esc(t)}</div>`
   ).join('');
 }
@@ -392,8 +399,8 @@ function filteredVideos() {
   return videos.filter(v => {
     const isFav = favs[v.id];
     if (selCategory === '⭐ お気に入り' && !isFav) return false;
-    if (selCategory !== 'すべて' && selCategory !== '⭐ お気に入り' && v.team !== selCategory) return false;
-    if (q && !v.title.toLowerCase().includes(q) && !(v.team||'').toLowerCase().includes(q)) return false;
+    if (selCategory !== 'すべて' && selCategory !== '⭐ お気に入り' && v.tag !== selCategory) return false;
+    if (q && !v.title.toLowerCase().includes(q) && !(v.team||'').toLowerCase().includes(q) && !(v.tag||'').toLowerCase().includes(q)) return false;
     return true;
   });
 }
