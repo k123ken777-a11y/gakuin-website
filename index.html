@@ -5,8 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 <title>KouTube｜浜松学院興誠中学校 バスケ動画</title>
 <link rel="manifest" href="manifest.json" />
-<link rel="icon" href="icon-192.svg" type="image/svg+xml" />
-<link rel="apple-touch-icon" href="icon-192.svg" />
+<link rel="icon" href="icon.svg" type="image/svg+xml" />
+<link rel="icon" href="icon-192.png" sizes="192x192" type="image/png" />
+<link rel="apple-touch-icon" href="icon-180.png" />
 <meta name="theme-color" content="#ffe3ec" />
 <meta name="mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -250,6 +251,25 @@ body { min-height: 100vh; }
 .info-card p { font-size: 12px; color: var(--text2); line-height: 1.7; }
 .info-card code { background: var(--border); padding: 2px 6px; border-radius: 4px; font-family: monospace; font-size: 11px; }
 .info-badge { display: inline-block; background: var(--orange-light); color: var(--orange-text); font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 10px; margin-bottom: 8px; }
+.howto { margin-top: 10px; display: flex; flex-direction: column; gap: 8px; }
+.howto-row {
+  display: flex; gap: 9px; align-items: flex-start;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 9px 11px;
+  font-size: 12px; color: var(--text2); line-height: 1.65;
+}
+.howto-os {
+  flex-shrink: 0; min-width: 74px; font-weight: 700;
+  color: var(--orange-text); font-size: 11px; padding-top: 1px;
+}
+.howto-row b { color: var(--text); font-weight: 700; }
+.qr-url { text-align: center; }
+.qr {
+  display: block; margin: 12px auto 8px; width: 200px; height: 200px;
+  background: #fff; border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 8px;
+}
+.qr-url { font-size: 11px; color: var(--text3); word-break: break-all; margin-bottom: 6px; text-align: center; }
 
 /* Error banner */
 .error-banner { background: #ffeaea; border-left: 3px solid #e24b4a; padding: 10px 16px; font-size: 12px; color: #a32d2d; display: none; }
@@ -329,26 +349,53 @@ body { min-height: 100vh; }
   <div id="tabInfo" class="tab-content">
     <div class="info-panel">
       <div class="info-card">
+        <div class="info-badge">はじめに</div>
+        <h3>ホーム画面に追加すると便利です</h3>
+        <p>追加すると、普通のアプリと同じようにアイコンから開けるようになります。毎回ブラウザでURLを開く必要がなくなります。</p>
+        <div class="howto">
+          <div class="howto-row">
+            <span class="howto-os">iPhone / iPad</span>
+            <span>Safari で開き、下の <b>共有ボタン</b>（□に↑）→ <b>「ホーム画面に追加」</b></span>
+          </div>
+          <div class="howto-row">
+            <span class="howto-os">Android</span>
+            <span>Chrome で開き、右上の <b>⋮</b> → <b>「アプリをインストール」</b>（または「ホーム画面に追加」）</span>
+          </div>
+          <div class="howto-row">
+            <span class="howto-os">パソコン</span>
+            <span>Chrome / Edge のアドレスバー右端にある <b>インストールのアイコン</b>（⊕）をクリック</span>
+          </div>
+        </div>
+      </div>
+      <div class="info-card qr-card">
+        <div class="info-badge">共有する</div>
+        <h3>このQRコードを読むと開けます</h3>
+        <img class="qr" src="qr.png" alt="KouTube のQRコード" width="200" height="200" loading="lazy" />
+        <p class="qr-url">k123ken777-a11y.github.io/gakuin-website/</p>
+        <p>画像を長押しして保存すれば、LINEなどで配れます。</p>
+      </div>
+      <div class="info-card">
         <div class="info-badge">メンバーの方へ</div>
         <h3>お気に入りの保存について</h3>
-        <p>⭐ マークをタップするとお気に入りに登録できます。お気に入りはこのブラウザだけに保存されるため、自分専用のリストを作れます。</p>
+        <p>⭐ マークをタップするとお気に入りに登録できます。お気に入りはこの端末のブラウザだけに保存されるため、自分専用のリストを作れます。別の端末には引き継がれません。</p>
       </div>
       <div class="info-card">
         <div class="info-badge">管理者の方へ</div>
         <h3>動画の追加・削除方法</h3>
-        <p>リポジトリ内の <code>videos.json</code> を編集してください。以下の形式で動画を追加できます：</p>
+        <p>リポジトリ内の <code>videos.json</code> を編集してください。新しい動画ほど上に並びます。以下の形式で追加できます：</p>
         <pre style="margin-top:10px;background:var(--border);padding:10px;border-radius:6px;font-size:11px;overflow-x:auto;line-height:1.6;">{
   "id": "YouTubeの動画ID",
-  "title": "動画タイトル",
-  "date": "2025-04-25",
-  "tag": "試合",
-  "team": "Aチーム"
+  "title": "9/23 KOSEI CUP vs 4TH 1Q",
+  "date": "2026-09-23",
+  "tag": "KOSEI CUP",
+  "team": "vs 4TH"
 }</pre>
-        <p style="margin-top:8px;">YouTubeの動画IDはURLの <code>v=</code> の後の11文字です。<br>例: <code>youtube.com/watch?v=<strong>dQw4w9WgXcQ</strong></code></p>
+        <p style="margin-top:8px;">動画IDは <code>youtu.be/</code> の後ろの11文字です。<br>例: <code>youtu.be/<strong>dQw4w9WgXcQ</strong></code></p>
       </div>
       <div class="info-card">
-        <h3>対応カテゴリ（tag）</h3>
-        <p>試合 / 練習 / ハイライト / トーナメント<br>（自由に文字列を設定できます）</p>
+        <h3>カテゴリ（tag）について</h3>
+        <p><code>tag</code> がそのまま絞り込みボタンになります。既にあるものと<b>1文字でも表記が違うと別のボタンが増えてしまう</b>ので、同じ大会なら下からそのままコピーしてください。</p>
+        <p style="margin-top:8px;">KOSEI CUP / Jrウィンター / 中体連 / 遠征 / 練習試合 / 会長杯 / PURE CUP / 1年生大会 / 県新人戦 / 新人戦</p>
       </div>
     </div>
   </div>
