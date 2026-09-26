@@ -7,50 +7,55 @@
 <link rel="manifest" href="manifest.json" />
 <link rel="icon" href="icon-192.svg" type="image/svg+xml" />
 <link rel="apple-touch-icon" href="icon-192.svg" />
-<meta name="theme-color" content="#1a1a2e" />
+<meta name="theme-color" content="#ffe3ec" />
 <meta name="mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-title" content="KouTube" />
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
-  --bg: #f5f5f5;
+  --bg: #fdf2f5;
   --surface: #ffffff;
-  --surface2: #f0f0f0;
-  --border: rgba(0,0,0,0.1);
-  --border2: rgba(0,0,0,0.18);
-  --text: #1a1a1a;
-  --text2: #666;
-  --text3: #999;
-  --orange: #f97316;
-  --orange-light: #fff3e8;
-  --orange-text: #c2510a;
-  --blue-light: #e8f0ff;
-  --blue-text: #2952a3;
-  --dark: #1a1a2e;
-  --dark2: #2d2d4e;
-  --radius: 10px;
-  --radius-sm: 6px;
+  --surface2: #fdeef2;
+  --border: rgba(180,110,130,0.18);
+  --border2: rgba(180,110,130,0.32);
+  --text: #4a333a;
+  --text2: #8b6b75;
+  --text3: #bfa3ac;
+  /* メイン＝ピンク、サブ＝ピーチ（ユニフォームのオレンジ寄り） */
+  --orange: #ef6a90;
+  --peach: #ffa26b;
+  --orange-light: #fff0f5;
+  --orange-text: #c2456d;
+  --blue-light: #f1eeff;
+  --blue-text: #6a5bb0;
+  --dark: #f3e3e9;
+  --dark2: rgba(180,110,130,0.2);
+  --header-grad: linear-gradient(135deg, #ffe3ec 0%, #ffd9e2 45%, #ffe7d2 100%);
+  --header-text: #8c3f5c;
+  --header-text2: rgba(140,63,92,0.62);
+  --radius: 14px;
+  --radius-sm: 10px;
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #111118;
-    --surface: #1c1c28;
-    --surface2: #252535;
-    --border: rgba(255,255,255,0.08);
-    --border2: rgba(255,255,255,0.15);
-    --text: #f0f0f0;
-    --text2: #aaa;
-    --text3: #666;
-    --orange-light: #2d1a0a;
-    --orange-text: #f97316;
-    --blue-light: #0d1a35;
-    --blue-text: #7aaaf0;
-    --dark: #0f0f1e;
-    --dark2: #1e1e38;
+    --bg: #1a1218;
+    --surface: #241a20;
+    --surface2: #30222a;
+    --border: rgba(255,255,255,0.09);
+    --border2: rgba(255,255,255,0.17);
+    --text: #f6e9ee;
+    --text2: #bfa2ad;
+    --text3: #7d6670;
+    --orange-light: #40202e;
+    --orange-text: #ff9ab5;
+    --blue-light: #2a2340;
+    --blue-text: #b9aefc;
+    --dark: #31222a;
+    --dark2: rgba(255,255,255,0.12);
   }
 }
 html { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sans JP', sans-serif; background: var(--bg); color: var(--text); }
@@ -99,24 +104,26 @@ body { min-height: 100vh; }
 
 /* Header */
 .header {
-  background: linear-gradient(135deg, #0d0d1f 0%, #1a1a3e 60%, #0f2050 100%);
+  background: var(--header-grad);
   padding: 14px 16px 12px;
   display: flex; align-items: center; justify-content: space-between;
   position: relative; overflow: hidden;
 }
+/* 背景の水玉もよう */
 .header::before {
   content: '';
   position: absolute; inset: 0;
-  background: repeating-linear-gradient(
-    -45deg, transparent, transparent 18px,
-    rgba(249,115,22,0.04) 18px, rgba(249,115,22,0.04) 19px
-  );
+  background-image:
+    radial-gradient(circle, rgba(255,255,255,0.55) 2.5px, transparent 2.6px),
+    radial-gradient(circle, rgba(239,106,144,0.16) 2px, transparent 2.1px);
+  background-size: 26px 26px, 26px 26px;
+  background-position: 0 0, 13px 13px;
   pointer-events: none;
 }
 .header-left { position: relative; z-index: 1; }
 .header-school {
   font-family: 'Noto Sans JP', sans-serif;
-  color: rgba(255,255,255,0.55);
+  color: var(--header-text2);
   font-size: 9px;
   font-weight: 700;
   letter-spacing: 1px;
@@ -129,7 +136,7 @@ body { min-height: 100vh; }
 .header-title-text {
   /* Bebas Neue は大文字のみのため、KouTube の大小文字が潰れる。本文書体を使う */
   font-family: 'Noto Sans JP', sans-serif;
-  color: #fff;
+  color: var(--header-text);
   font-size: 26px;
   font-weight: 700;
   letter-spacing: 0.5px;
@@ -140,10 +147,10 @@ body { min-height: 100vh; }
   display: flex; align-items: center; gap: 6px; margin-top: 4px;
 }
 .header-line {
-  height: 1px; width: 22px; background: var(--orange); opacity: 0.7;
+  height: 2px; width: 22px; border-radius: 2px; background: var(--orange); opacity: 0.85;
 }
 .header-sub {
-  color: var(--orange);
+  color: var(--orange-text);
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 1.5px;
@@ -151,22 +158,22 @@ body { min-height: 100vh; }
 .header-count {
   background: var(--orange); color: #fff; font-size: 11px; font-weight: 700;
   padding: 5px 11px; border-radius: 20px; position: relative; z-index: 1;
-  box-shadow: 0 2px 8px rgba(249,115,22,0.4);
+  box-shadow: 0 2px 8px rgba(239,106,144,0.45);
 }
 
 /* Player */
-.player-wrap { background: #000; aspect-ratio: 16/9; position: relative; }
+.player-wrap { background: #2b1d25; aspect-ratio: 16/9; position: relative; }
 .player-wrap iframe { width: 100%; height: 100%; border: none; display: none; }
-.player-placeholder { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; color: #444; }
-.play-circle { width: 60px; height: 60px; border-radius: 50%; border: 2px solid #333; display: flex; align-items: center; justify-content: center; }
-.play-circle svg { width: 24px; height: 24px; fill: #444; margin-left: 3px; }
-.placeholder-text { font-size: 13px; color: #555; }
+.player-placeholder { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; color: #b98ea0; }
+.play-circle { width: 60px; height: 60px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.25); display: flex; align-items: center; justify-content: center; }
+.play-circle svg { width: 24px; height: 24px; fill: rgba(255,255,255,0.45); margin-left: 3px; }
+.placeholder-text { font-size: 13px; color: rgba(255,255,255,0.55); }
 
 /* Now playing */
 .now-playing { background: var(--dark); padding: 10px 16px; border-bottom: 1px solid var(--dark2); display: none; }
-.np-label { color: var(--orange); font-size: 10px; font-weight: 600; letter-spacing: 0.6px; }
-.np-title { color: #fff; font-size: 14px; margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.np-meta { color: #888; font-size: 11px; margin-top: 2px; }
+.np-label { color: var(--orange-text); font-size: 10px; font-weight: 600; letter-spacing: 0.6px; }
+.np-title { color: var(--text); font-weight: 600; font-size: 14px; margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.np-meta { color: var(--text2); font-size: 11px; margin-top: 2px; }
 
 /* Tabs */
 .tab-bar { display: flex; background: var(--surface); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 20; }
