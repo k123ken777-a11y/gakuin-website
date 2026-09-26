@@ -82,7 +82,10 @@ body { min-height: 100vh; }
     box-shadow: 0 0 60px rgba(0,0,0,0.15);
   }
   .header      { grid-area: header; }
-  .player-wrap { grid-area: player; aspect-ratio: unset; min-height: 400px; }
+  /* 後ろにある .player-wrap { aspect-ratio: 16/9 } と同じ詳細度だと
+     そちらが勝ってしまい、min-height 400px と掛け合わさって
+     横幅711pxを要求し、画面に収まらなくなる。詳細度を上げて打ち消す */
+  .app .player-wrap { grid-area: player; aspect-ratio: auto; min-height: 400px; }
   .now-playing { grid-area: nowplay; border-right: 1px solid var(--dark2); border-bottom: none; }
   .desktop-filler { grid-area: filler; background: var(--surface2); border-right: 1px solid var(--border); }
   .desktop-sidebar {
@@ -98,6 +101,7 @@ body { min-height: 100vh; }
   .tab-content.active { display: flex; flex-direction: column; }
   .search-bar { flex-shrink: 0; }
   .filter-row { flex-shrink: 0; }
+  .team-bar { flex-shrink: 0; }
   .video-list { padding-bottom: 20px; }
   /* PC向けカード少し大きく */
   .thumb { width: 140px; height: 79px; }
@@ -214,6 +218,26 @@ body { min-height: 100vh; }
   background: linear-gradient(120deg, var(--orange) 0%, #f5843f 105%);
   border-color: transparent; color: #fff; font-weight: 700;
   box-shadow: 0 2px 7px rgba(236,120,90,0.35);
+}
+
+/* 対戦相手のプルダウン */
+.team-bar { display: flex; gap: 8px; align-items: center; padding: 9px 16px; border-bottom: 1px solid var(--border); }
+.team-select {
+  flex: 1; min-width: 0;
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 20px; padding: 9px 34px 9px 14px; font-size: 13px;
+  color: var(--text); outline: none; cursor: pointer;
+  font-family: inherit;
+  appearance: none; -webkit-appearance: none;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23b8600f' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 13px center; background-size: 13px;
+}
+.team-select:focus { border-color: var(--peach-deep); }
+.team-select.on { background-color: var(--orange-light); border-color: var(--peach-deep); color: var(--orange-text); font-weight: 700; }
+.team-clear {
+  flex-shrink: 0; width: 34px; height: 34px; border-radius: 50%;
+  border: 1px solid var(--border); background: var(--surface);
+  color: var(--text2); font-size: 17px; line-height: 1; cursor: pointer;
 }
 
 /* Video cards */
@@ -341,6 +365,12 @@ body { min-height: 100vh; }
       </div>
     </div>
     <div class="filter-row" id="filterRow"></div>
+    <div class="team-bar">
+      <select class="team-select" id="teamSelect" onchange="setTeam(this.value)"
+              aria-label="対戦相手でしぼり込む"></select>
+      <button class="team-clear" id="teamClear" onclick="setTeam('')" hidden
+              aria-label="対戦相手のしぼり込みを解除">×</button>
+    </div>
     <div class="video-list" id="videoList">
       <div class="loading"><div class="spinner"></div>動画を読み込み中…</div>
     </div>
@@ -391,6 +421,7 @@ body { min-height: 100vh; }
           <div class="howto-row"><span class="howto-os">9/23 4th</span><span>9月23日の 4TH 戦だけ</span></div>
           <div class="howto-row"><span class="howto-os">三遠 b戦</span><span>三遠とのB戦だけ</span></div>
         </div>
+        <p style="margin-top:12px;">相手の名前がうろ覚えのときは、<b>「対戦相手」のプルダウン</b>から選べます。大会のボタンを選んでいるときは、<b>その大会で当たった相手だけ</b>が出てきます。</p>
       </div>
       <div class="info-card">
         <h3>お気に入りの保存について</h3>
@@ -427,6 +458,7 @@ body { min-height: 100vh; }
 let videos = [];
 let favs = {};
 let selCategory = 'すべて';
+let selTeam = '';          // 対戦相手のしぼり込み（空＝すべて）
 
 // Load favourites from localStorage (per-user)
 try { favs = JSON.parse(localStorage.getItem('bk_favs') || '{}'); } catch(e) {}
@@ -457,6 +489,7 @@ async function loadVideos() {
     buildIndex();
     document.getElementById('headerCount').textContent = videos.length + '本';
     renderFilters();
+    renderTeams();
     renderList();
     renderFav();
   } catch(e) {
@@ -476,7 +509,39 @@ function setFilter(el, t) {
   selCategory = t;
   document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
   el.classList.add('active');
+  // 大会を変えたとき、その大会に出てこない相手が選ばれたままにならないようにする
+  if (selTeam && !teamsFor(selCategory).some(([name]) => name === selTeam)) selTeam = '';
+  renderTeams();
   renderList();
+}
+
+function setTeam(t) {
+  selTeam = t;
+  renderTeams();
+  renderList();
+}
+
+// 選ばれている大会に出てくる相手だけを、対戦数の多い順で返す
+function teamsFor(cat) {
+  const counts = new Map();
+  videos.forEach(v => {
+    if (!v.team) return;
+    if (cat === '⭐ お気に入り' && !favs[v.id]) return;
+    if (cat !== 'すべて' && cat !== '⭐ お気に入り' && v.tag !== cat) return;
+    counts.set(v.team, (counts.get(v.team) || 0) + 1);
+  });
+  return [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'ja'));
+}
+
+function renderTeams() {
+  const list = teamsFor(selCategory);
+  const sel = document.getElementById('teamSelect');
+  const total = list.reduce((n, [, c]) => n + c, 0);
+  sel.innerHTML = `<option value="">対戦相手：すべて（${list.length}チーム・${total}本）</option>`
+    + list.map(([name, n]) => `<option value="${esc(name)}">${esc(name)}（${n}本）</option>`).join('');
+  sel.value = selTeam;
+  sel.classList.toggle('on', !!selTeam);
+  document.getElementById('teamClear').hidden = !selTeam;
 }
 
 // ─── 検索 ────────────────────────────────────────────────
@@ -520,6 +585,7 @@ function filteredVideos() {
     const isFav = favs[v.id];
     if (selCategory === '⭐ お気に入り' && !isFav) return false;
     if (selCategory !== 'すべて' && selCategory !== '⭐ お気に入り' && v.tag !== selCategory) return false;
+    if (selTeam && v.team !== selTeam) return false;
     if (terms.length && !terms.every(t => (v._hay || '').includes(t))) return false;
     return true;
   });
@@ -578,6 +644,7 @@ function playVideo(id, title, date, team, tag) {
 function toggleFav(id) {
   if (favs[id]) { delete favs[id]; } else { favs[id] = true; }
   saveFavs();
+  if (selCategory === '⭐ お気に入り') renderTeams();
   renderList();
   renderFav();
 }
