@@ -331,7 +331,7 @@ body { min-height: 100vh; }
         <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
         </svg>
-        <input class="search-input" id="searchInput" placeholder="相手チーム・大会名で検索…" oninput="renderList()" />
+        <input class="search-input" id="searchInput" placeholder="チーム・大会・日付で検索（スペースで絞込）" oninput="renderList()" />
       </div>
     </div>
     <div class="filter-row" id="filterRow"></div>
@@ -376,6 +376,15 @@ body { min-height: 100vh; }
       </div>
       <div class="info-card">
         <div class="info-badge">メンバーの方へ</div>
+        <h3>さがし方</h3>
+        <p>検索はスペースで区切ると<b>両方にあてはまるものだけ</b>に絞り込めます。日付でも探せます。</p>
+        <div class="howto" style="margin-top:10px;">
+          <div class="howto-row"><span class="howto-os">開誠館 決勝</span><span>開誠館との決勝だけ</span></div>
+          <div class="howto-row"><span class="howto-os">9/23 4th</span><span>9月23日の 4TH 戦だけ</span></div>
+          <div class="howto-row"><span class="howto-os">三遠 b戦</span><span>三遠とのB戦だけ</span></div>
+        </div>
+      </div>
+      <div class="info-card">
         <h3>お気に入りの保存について</h3>
         <p>⭐ マークをタップするとお気に入りに登録できます。お気に入りはこの端末のブラウザだけに保存されるため、自分専用のリストを作れます。別の端末には引き継がれません。</p>
       </div>
@@ -385,12 +394,13 @@ body { min-height: 100vh; }
         <p>リポジトリ内の <code>videos.json</code> を編集してください。新しい動画ほど上に並びます。以下の形式で追加できます：</p>
         <pre style="margin-top:10px;background:var(--border);padding:10px;border-radius:6px;font-size:11px;overflow-x:auto;line-height:1.6;">{
   "id": "YouTubeの動画ID",
-  "title": "9/23 KOSEI CUP vs 4TH 1Q",
+  "title": "KOSEI CUP vs 4TH 1Q",
   "date": "2026-09-23",
   "tag": "KOSEI CUP",
   "team": "vs 4TH"
 }</pre>
         <p style="margin-top:8px;">動画IDは <code>youtu.be/</code> の後ろの11文字です。<br>例: <code>youtu.be/<strong>dQw4w9WgXcQ</strong></code></p>
+        <p style="margin-top:8px;">日付は <code>date</code> だけに書けば一覧に表示されます。<code>title</code> に日付を入れる必要はありません。</p>
       </div>
       <div class="info-card">
         <h3>カテゴリ（tag）について</h3>
@@ -436,6 +446,7 @@ async function loadVideos() {
     videos = await res.json();
     // 新しい日付順（降順）にソート
     videos.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+    buildIndex();
     document.getElementById('headerCount').textContent = videos.length + '本';
     renderFilters();
     renderList();
@@ -460,13 +471,48 @@ function setFilter(el, t) {
   renderList();
 }
 
+// ─── 検索 ────────────────────────────────────────────────
+const WDAY = ['日','月','火','水','木','金','土'];
+
+// 「9/23」「2026/9/23」「9月23日」「20260923」など、
+// 日付をどう打っても引っかかるように候補を並べておく
+function dateKeys(d) {
+  if (!d) return '';
+  const [y, m, dd] = d.split('-');
+  const M = +m, D = +dd;
+  const w = WDAY[new Date(+y, M - 1, D).getDay()] || '';
+  return [d, `${y}/${m}/${dd}`, `${y}/${M}/${D}`, `${m}/${dd}`, `${M}/${D}`,
+          `${M}月${D}日`, `${y}年${M}月${D}日`, `${y}${m}${dd}`, `${m}${dd}`,
+          w + '曜'].join(' ');
+}
+
+function dateLabel(d) {
+  if (!d) return '';
+  const [y, m, dd] = d.split('-');
+  const w = WDAY[new Date(+y, +m - 1, +dd).getDay()] || '';
+  return `${y}/${+m}/${+dd}（${w}）`;
+}
+
+// 全角スペースも区切りとして扱い、小文字に揃える
+function normalize(s) {
+  return String(s || '').toLowerCase().replace(/[　\s]+/g, ' ').trim();
+}
+
+// 検索対象の文字列は動画ごとに一度だけ作っておく（入力のたびに作らない）
+function buildIndex() {
+  videos.forEach(v => {
+    v._hay = normalize([v.title, v.team, v.tag, dateKeys(v.date)].join(' '));
+  });
+}
+
 function filteredVideos() {
-  const q = (document.getElementById('searchInput')?.value || '').toLowerCase();
+  // スペース区切りの語をすべて含むものだけを残す（AND検索）
+  const terms = normalize(document.getElementById('searchInput')?.value).split(' ').filter(Boolean);
   return videos.filter(v => {
     const isFav = favs[v.id];
     if (selCategory === '⭐ お気に入り' && !isFav) return false;
     if (selCategory !== 'すべて' && selCategory !== '⭐ お気に入り' && v.tag !== selCategory) return false;
-    if (q && !v.title.toLowerCase().includes(q) && !(v.team||'').toLowerCase().includes(q) && !(v.tag||'').toLowerCase().includes(q)) return false;
+    if (terms.length && !terms.every(t => (v._hay || '').includes(t))) return false;
     return true;
   });
 }
@@ -483,7 +529,7 @@ function cardHtml(v) {
         <div class="card-title">${esc(v.title)}</div>
         <button class="fav-btn" onclick="event.stopPropagation();toggleFav('${esc(v.id)}')" aria-label="お気に入り">${isFav?'⭐':'☆'}</button>
       </div>
-      <div class="card-meta">${esc(v.date||'')}${v.team?' · '+esc(v.team):''}</div>
+      <div class="card-meta">${esc(dateLabel(v.date))}</div>
       <div class="badges">
         ${v.tag?`<span class="badge badge-tag">${esc(v.tag)}</span>`:''}
         ${v.team?`<span class="badge badge-team">${esc(v.team)}</span>`:''}
@@ -517,7 +563,7 @@ function playVideo(id, title, date, team, tag) {
   const np = document.getElementById('nowPlaying');
   np.style.display = 'block';
   document.getElementById('npTitle').textContent = title;
-  document.getElementById('npMeta').textContent = [date, team, tag].filter(Boolean).join(' · ');
+  document.getElementById('npMeta').textContent = [dateLabel(date), team, tag].filter(Boolean).join(' · ');
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
