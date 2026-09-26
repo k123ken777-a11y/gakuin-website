@@ -72,7 +72,7 @@ body { min-height: 100vh; }
     /* 画面の横幅いっぱいに広げる。右の一覧は画面幅に応じて少しだけ広がる */
     max-width: none; width: 100%;
     display: grid;
-    grid-template-columns: 1fr clamp(380px, 26vw, 560px);
+    grid-template-columns: 1fr clamp(420px, 34vw, 720px);
     grid-template-rows: auto auto auto 1fr;
     grid-template-areas:
       "header   header"
@@ -109,9 +109,18 @@ body { min-height: 100vh; }
   .filter-row { flex-shrink: 0; }
   .team-bar { flex-shrink: 0; }
   .video-list { padding-bottom: 20px; }
-  /* PC向けカード少し大きく */
-  .thumb { width: 140px; height: 79px; }
-  .card-title { font-size: 14px; }
+  /* PC向けカード少し大きく。
+     .thumb などの基本設定はこの後ろに書かれていて詳細度が同じだと
+     そちらが勝ってしまうため、.app を付けて打ち消す */
+  .app .thumb { width: 140px; height: 79px; }
+  .app .card-title { font-size: 14px; }
+}
+
+/* 一覧が広く取れる画面では、サムネと文字をもう一段大きく */
+@media (min-width: 1500px) {
+  .app .thumb { width: 176px; height: 99px; }
+  .app .card-title { font-size: 15px; }
+  .app .card-meta { font-size: 12px; }
 }
 
 /* Header */
