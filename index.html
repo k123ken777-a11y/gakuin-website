@@ -270,6 +270,12 @@ body { min-height: 100vh; }
   border-radius: var(--radius-sm); padding: 8px;
 }
 .qr-url { font-size: 11px; color: var(--text3); word-break: break-all; margin-bottom: 6px; text-align: center; }
+.guide-link {
+  display: inline-block; color: var(--orange-text); font-weight: 700;
+  font-size: 12px; text-decoration: none;
+  border: 1px solid var(--border2); border-radius: 20px; padding: 7px 14px;
+  background: var(--surface);
+}
 
 /* Error banner */
 .error-banner { background: #ffeaea; border-left: 3px solid #e24b4a; padding: 10px 16px; font-size: 12px; color: #a32d2d; display: none; }
@@ -373,6 +379,8 @@ body { min-height: 100vh; }
         <img class="qr" src="qr.png" alt="KouTube のQRコード" width="200" height="200" loading="lazy" />
         <p class="qr-url">k123ken777-a11y.github.io/gakuin-website/</p>
         <p>画像を長押しして保存すれば、LINEなどで配れます。</p>
+        <p style="margin-top:10px;"><a class="guide-link" href="install-guide.png" target="_blank" rel="noopener">📄 入れ方の案内画像をひらく</a><br>
+        <span style="font-size:11px;color:var(--text3);">QRコードと手順が1枚にまとまっています。保存してそのまま配れます。</span></p>
       </div>
       <div class="info-card">
         <div class="info-badge">メンバーの方へ</div>
