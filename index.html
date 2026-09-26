@@ -26,15 +26,16 @@
   --text2: #8b6b75;
   --text3: #bfa3ac;
   /* メイン＝ピンク、サブ＝ピーチ（ユニフォームのオレンジ寄り） */
-  --orange: #ef6a90;
-  --peach: #ffa26b;
-  --orange-light: #fff0f5;
-  --orange-text: #c2456d;
+  --orange: #ef6a90;          /* UIのメイン＝ピンク */
+  --peach: #ffa26b;           /* チームカラー＝オレンジ */
+  --peach-deep: #e07f2c;
+  --orange-light: #fff2e3;    /* 大会タグの下地（オレンジ系） */
+  --orange-text: #b8600f;
   --blue-light: #f1eeff;
   --blue-text: #6a5bb0;
   --dark: #f3e3e9;
   --dark2: rgba(180,110,130,0.2);
-  --header-grad: linear-gradient(135deg, #ffe3ec 0%, #ffd9e2 45%, #ffe7d2 100%);
+  --header-grad: linear-gradient(135deg, #ffe3ec 0%, #ffd9e2 42%, #ffdcba 100%);
   --header-text: #8c3f5c;
   --header-text2: rgba(140,63,92,0.62);
   --radius: 14px;
@@ -50,8 +51,8 @@
     --text: #f6e9ee;
     --text2: #bfa2ad;
     --text3: #7d6670;
-    --orange-light: #40202e;
-    --orange-text: #ff9ab5;
+    --orange-light: #3f2a14;
+    --orange-text: #ffb46b;
     --blue-light: #2a2340;
     --blue-text: #b9aefc;
     --dark: #31222a;
@@ -147,7 +148,7 @@ body { min-height: 100vh; }
   display: flex; align-items: center; gap: 6px; margin-top: 4px;
 }
 .header-line {
-  height: 2px; width: 22px; border-radius: 2px; background: var(--orange); opacity: 0.85;
+  height: 2px; width: 22px; border-radius: 2px; background: var(--peach-deep); opacity: 0.9;
 }
 .header-sub {
   color: var(--orange-text);
@@ -156,7 +157,8 @@ body { min-height: 100vh; }
   letter-spacing: 1.5px;
 }
 .header-count {
-  background: var(--orange); color: #fff; font-size: 11px; font-weight: 700;
+  background: linear-gradient(135deg, var(--orange) 0%, var(--peach) 115%);
+  color: #fff; font-size: 11px; font-weight: 700;
   padding: 5px 11px; border-radius: 20px; position: relative; z-index: 1;
   box-shadow: 0 2px 8px rgba(239,106,144,0.45);
 }
