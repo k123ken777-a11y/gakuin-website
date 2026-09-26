@@ -17,25 +17,25 @@
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
-  --bg: #fdf2f5;
+  --bg: #fff5ec;
   --surface: #ffffff;
-  --surface2: #fdeef2;
-  --border: rgba(180,110,130,0.18);
-  --border2: rgba(180,110,130,0.32);
-  --text: #4a333a;
-  --text2: #8b6b75;
-  --text3: #bfa3ac;
+  --surface2: #fff0e2;
+  --border: rgba(200,120,60,0.20);
+  --border2: rgba(200,120,60,0.34);
+  --text: #4a3630;
+  --text2: #8a6c5e;
+  --text3: #bfa595;
   /* メイン＝ピンク、サブ＝ピーチ（ユニフォームのオレンジ寄り） */
   --orange: #ef6a90;          /* UIのメイン＝ピンク */
   --peach: #ffa26b;           /* チームカラー＝オレンジ */
   --peach-deep: #e07f2c;
   --orange-light: #fff2e3;    /* 大会タグの下地（オレンジ系） */
   --orange-text: #b8600f;
-  --blue-light: #f1eeff;
-  --blue-text: #6a5bb0;
-  --dark: #f3e3e9;
-  --dark2: rgba(180,110,130,0.2);
-  --header-grad: linear-gradient(135deg, #ffe0ea 0%, #ffd5e0 34%, #ffc9a0 100%);
+  --blue-light: #f3eeff;
+  --blue-text: #7a5bb0;
+  --dark: #f7e4d2;
+  --dark2: rgba(200,120,60,0.22);
+  --header-grad: linear-gradient(135deg, #ffdde9 0%, #ffcfc0 42%, #ffb673 100%);
   --header-text: #8c3f5c;
   --header-text2: rgba(140,63,92,0.62);
   --radius: 14px;
@@ -43,19 +43,19 @@
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #1a1218;
-    --surface: #241a20;
-    --surface2: #30222a;
+    --bg: #1c1510;
+    --surface: #281d16;
+    --surface2: #35261c;
     --border: rgba(255,255,255,0.09);
     --border2: rgba(255,255,255,0.17);
-    --text: #f6e9ee;
-    --text2: #bfa2ad;
-    --text3: #7d6670;
+    --text: #f7ece2;
+    --text2: #c4ab99;
+    --text3: #826c5c;
     --orange-light: #3f2a14;
     --orange-text: #ffb46b;
     --blue-light: #2a2340;
     --blue-text: #b9aefc;
-    --dark: #31222a;
+    --dark: #38271c;
     --dark2: rgba(255,255,255,0.12);
   }
 }
@@ -168,15 +168,15 @@ body { min-height: 100vh; }
 }
 
 /* Player */
-.player-wrap { background: #2b1d25; aspect-ratio: 16/9; position: relative; }
+.player-wrap { background: #2e1f14; aspect-ratio: 16/9; position: relative; }
 .player-wrap iframe { width: 100%; height: 100%; border: none; display: none; }
-.player-placeholder { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; color: #b98ea0; }
+.player-placeholder { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; color: #c39a72; }
 .play-circle { width: 60px; height: 60px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.25); display: flex; align-items: center; justify-content: center; }
 .play-circle svg { width: 24px; height: 24px; fill: rgba(255,255,255,0.45); margin-left: 3px; }
 .placeholder-text { font-size: 13px; color: rgba(255,255,255,0.55); }
 
 /* Now playing */
-.now-playing { background: var(--dark); padding: 10px 16px; border-bottom: 1px solid var(--dark2); display: none; }
+.now-playing { background: linear-gradient(90deg, var(--surface2) 0%, var(--dark) 100%); padding: 10px 16px; border-bottom: 1px solid var(--dark2); display: none; }
 .np-label { color: var(--orange-text); font-size: 10px; font-weight: 600; letter-spacing: 0.6px; }
 .np-title { color: var(--text); font-weight: 600; font-size: 14px; margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .np-meta { color: var(--text2); font-size: 11px; margin-top: 2px; }
@@ -218,7 +218,7 @@ body { min-height: 100vh; }
 /* Video cards */
 .video-list { padding-bottom: 80px; }
 .video-card { display: flex; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--border); cursor: pointer; align-items: flex-start; transition: background 0.1s; }
-.video-card:active { background: var(--surface2); }
+.video-card:active { background: var(--orange-light); }
 .thumb { width: 120px; height: 68px; border-radius: var(--radius-sm); background: var(--dark); flex-shrink: 0; overflow: hidden; position: relative; }
 .thumb img { width: 100%; height: 100%; object-fit: cover; }
 .thumb-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(120,50,20,0.22); }
