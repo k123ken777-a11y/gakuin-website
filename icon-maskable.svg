@@ -6,11 +6,10 @@
       .jp { font-family:'KTJp','Yu Gothic UI','Yu Gothic','Meiryo','Hiragino Sans',sans-serif;
              font-weight:700; fill:#fff; }
     </style>
-    
   </defs>
   <rect width="192" height="192" fill="#f2751f"/>
   <g transform="translate(96,96) scale(0.8) translate(-96,-96)">
-  <text class="jp" x="96" y="74" text-anchor="middle" dominant-baseline="central" font-size="47" letter-spacing="3">興誠中</text>
-  <text class="jp" x="96" y="128" text-anchor="middle" dominant-baseline="central" font-size="39" letter-spacing="1">バスケ部</text>
+  <text class="jp" x="96" y="74" text-anchor="middle" dominant-baseline="central" font-size="46" letter-spacing="3">興誠中</text>
+  <text class="jp" x="96" y="130" text-anchor="middle" dominant-baseline="central" font-size="27" letter-spacing="0.5">女子バスケ部</text>
   </g>
 </svg>
