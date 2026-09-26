@@ -69,35 +69,41 @@ body { min-height: 100vh; }
 @media (min-width: 860px) {
   body { display: flex; align-items: flex-start; justify-content: center; padding: 0; }
   .app {
-    max-width: 1280px; width: 100%;
+    /* 画面の横幅いっぱいに広げる。右の一覧は画面幅に応じて少しだけ広がる */
+    max-width: none; width: 100%;
     display: grid;
-    grid-template-columns: 1fr 420px;
+    grid-template-columns: 1fr clamp(380px, 26vw, 560px);
     grid-template-rows: auto auto auto 1fr;
     grid-template-areas:
       "header   header"
       "player   sidebar"
       "nowplay  sidebar"
       "filler   sidebar";
-    min-height: 100vh;
-    box-shadow: 0 0 60px rgba(0,0,0,0.15);
+    height: 100vh;
+    overflow: hidden;
   }
   .header      { grid-area: header; }
-  /* 後ろにある .player-wrap { aspect-ratio: 16/9 } と同じ詳細度だと
-     そちらが勝ってしまい、min-height 400px と掛け合わさって
-     横幅711pxを要求し、画面に収まらなくなる。詳細度を上げて打ち消す */
-  .app .player-wrap { grid-area: player; aspect-ratio: auto; min-height: 400px; }
+  /* 16:9 を保ちつつ、画面が広いときに縦に伸びすぎないよう高さを制限する。
+     min-width:0 を入れないと、16:9 と min-height の掛け合わせで
+     必要幅が決まってしまい、横スクロールが出る */
+  .app .player-wrap {
+    grid-area: player;
+    aspect-ratio: 16 / 9;
+    min-width: 0;
+    min-height: 360px;
+    max-height: calc(100vh - 150px);
+  }
   .now-playing { grid-area: nowplay; border-right: 1px solid var(--dark2); border-bottom: none; }
   .desktop-filler { grid-area: filler; background: var(--surface2); border-right: 1px solid var(--border); }
   .desktop-sidebar {
     grid-area: sidebar;
     display: flex; flex-direction: column;
-    height: 100vh;
-    position: sticky; top: 0;
+    min-height: 0;
     border-left: 1px solid var(--border);
     overflow: hidden;
   }
   .tab-bar { position: static; flex-shrink: 0; }
-  .tab-content { flex: 1; overflow-y: auto; }
+  .tab-content { flex: 1; min-height: 0; overflow-y: auto; }
   .tab-content.active { display: flex; flex-direction: column; }
   .search-bar { flex-shrink: 0; }
   .filter-row { flex-shrink: 0; }
