@@ -13,7 +13,7 @@
 <meta name="apple-mobile-web-app-title" content="KouTube" />
 <meta name="apple-mobile-web-app-status-bar-style" content="default" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@600;700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
@@ -35,7 +35,7 @@
   --blue-text: #6a5bb0;
   --dark: #f3e3e9;
   --dark2: rgba(180,110,130,0.2);
-  --header-grad: linear-gradient(135deg, #ffe3ec 0%, #ffd9e2 42%, #ffdcba 100%);
+  --header-grad: linear-gradient(135deg, #ffe0ea 0%, #ffd5e0 34%, #ffc9a0 100%);
   --header-text: #8c3f5c;
   --header-text2: rgba(140,63,92,0.62);
   --radius: 14px;
@@ -135,13 +135,17 @@ body { min-height: 100vh; }
   display: flex; align-items: center; gap: 8px;
 }
 .header-title-text {
-  /* Bebas Neue は大文字のみのため、KouTube の大小文字が潰れる。本文書体を使う */
-  font-family: 'Noto Sans JP', sans-serif;
-  color: var(--header-text);
-  font-size: 26px;
+  font-family: 'Quicksand', 'Noto Sans JP', sans-serif;
+  font-size: 30px;
   font-weight: 700;
-  letter-spacing: 0.5px;
-  line-height: 1;
+  letter-spacing: 0.3px;
+  line-height: 1.05;
+  /* ピンク→オレンジのグラデーション文字（非対応環境は --header-text 単色） */
+  color: var(--header-text);
+  background: linear-gradient(95deg, #e2557f 0%, #ec6d57 55%, #e07f2c 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 .header-ball { font-size: 22px; line-height: 1; }
 .header-accent {
@@ -180,7 +184,7 @@ body { min-height: 100vh; }
 /* Tabs */
 .tab-bar { display: flex; background: var(--surface); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 20; }
 .tab { flex: 1; padding: 12px 4px; text-align: center; font-size: 12px; color: var(--text2); cursor: pointer; border-bottom: 2px solid transparent; transition: color 0.15s, border-color 0.15s; user-select: none; }
-.tab.active { color: var(--orange); border-bottom-color: var(--orange); font-weight: 600; }
+.tab.active { color: var(--orange-text); border-bottom-color: var(--peach-deep); font-weight: 700; }
 
 .tab-content { display: none; }
 .tab-content.active { display: block; }
@@ -195,7 +199,7 @@ body { min-height: 100vh; }
   color: var(--text); outline: none;
 }
 .search-input::placeholder { color: var(--text3); }
-.search-input:focus { border-color: var(--orange); }
+.search-input:focus { border-color: var(--peach-deep); }
 
 /* Filter chips */
 .filter-row {
@@ -205,7 +209,11 @@ body { min-height: 100vh; }
 }
 .filter-row::-webkit-scrollbar { display: none; }
 .chip { background: var(--surface2); border: 1px solid var(--border); border-radius: 20px; padding: 5px 13px; font-size: 12px; color: var(--text2); cursor: pointer; white-space: nowrap; flex-shrink: 0; transition: all 0.15s; user-select: none; }
-.chip.active { background: var(--orange); border-color: var(--orange); color: #fff; font-weight: 600; }
+.chip.active {
+  background: linear-gradient(120deg, var(--orange) 0%, #f5843f 105%);
+  border-color: transparent; color: #fff; font-weight: 700;
+  box-shadow: 0 2px 7px rgba(236,120,90,0.35);
+}
 
 /* Video cards */
 .video-list { padding-bottom: 80px; }
@@ -213,8 +221,8 @@ body { min-height: 100vh; }
 .video-card:active { background: var(--surface2); }
 .thumb { width: 120px; height: 68px; border-radius: var(--radius-sm); background: var(--dark); flex-shrink: 0; overflow: hidden; position: relative; }
 .thumb img { width: 100%; height: 100%; object-fit: cover; }
-.thumb-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.25); }
-.thumb-overlay svg { width: 22px; height: 22px; fill: rgba(255,255,255,0.9); margin-left: 3px; }
+.thumb-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(120,50,20,0.22); }
+.thumb-overlay svg { width: 24px; height: 24px; fill: #ffb27a; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.45)); margin-left: 3px; }
 .card-body { flex: 1; min-width: 0; }
 .card-top { display: flex; align-items: flex-start; gap: 4px; }
 .card-title { font-size: 13px; font-weight: 500; color: var(--text); line-height: 1.35; flex: 1; }
@@ -232,7 +240,7 @@ body { min-height: 100vh; }
 
 /* Loading */
 .loading { text-align: center; padding: 40px; color: var(--text3); font-size: 13px; }
-.spinner { width: 28px; height: 28px; border: 3px solid var(--border2); border-top-color: var(--orange); border-radius: 50%; animation: spin 0.7s linear infinite; margin: 0 auto 12px; }
+.spinner { width: 28px; height: 28px; border: 3px solid var(--border2); border-top-color: var(--peach-deep); border-radius: 50%; animation: spin 0.7s linear infinite; margin: 0 auto 12px; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* Info panel */
@@ -253,7 +261,7 @@ body { min-height: 100vh; }
   <!-- Header -->
   <div class="header">
     <div class="header-left">
-      <div class="header-school">浜松学院興誠中学校 バスケットボール部</div>
+      <div class="header-school">浜松学院興誠中学校 女子バスケットボール部</div>
       <div class="header-title">
         <span class="header-ball">🏀</span>
         <span class="header-title-text">KouTube</span>
