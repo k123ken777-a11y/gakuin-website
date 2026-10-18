@@ -1,5 +1,110 @@
 [
   {
+    "id": "Mkkz42vjj6k",
+    "title": "練習試合 vs ピュアチャンプス ① 1Q",
+    "date": "2026-10-17",
+    "tag": "練習試合",
+    "team": "vs ピュアチャンプス"
+  },
+  {
+    "id": "3EuYKuQXFjk",
+    "title": "練習試合 vs ピュアチャンプス ① 2Q",
+    "date": "2026-10-17",
+    "tag": "練習試合",
+    "team": "vs ピュアチャンプス"
+  },
+  {
+    "id": "ttJv80lgJm4",
+    "title": "練習試合 vs ピュアチャンプス ② 1Q",
+    "date": "2026-10-17",
+    "tag": "練習試合",
+    "team": "vs ピュアチャンプス"
+  },
+  {
+    "id": "xa0O7A8uxjE",
+    "title": "練習試合 vs ピュアチャンプス ② 2Q",
+    "date": "2026-10-17",
+    "tag": "練習試合",
+    "team": "vs ピュアチャンプス"
+  },
+  {
+    "id": "g4ftoxva6NI",
+    "title": "練習試合 vs ピュアチャンプス B戦 ① 1Q",
+    "date": "2026-10-17",
+    "tag": "練習試合",
+    "team": "vs ピュアチャンプス"
+  },
+  {
+    "id": "oLMCdEFYQec",
+    "title": "練習試合 vs ピュアチャンプス B戦 ① 2Q",
+    "date": "2026-10-17",
+    "tag": "練習試合",
+    "team": "vs ピュアチャンプス"
+  },
+  {
+    "id": "RDeJknX1tCI",
+    "title": "練習試合 vs ピュアチャンプス B戦 ② 1Q",
+    "date": "2026-10-17",
+    "tag": "練習試合",
+    "team": "vs ピュアチャンプス"
+  },
+  {
+    "id": "2c3uXCkHhkI",
+    "title": "練習試合 vs ピュアチャンプス B戦 ② 2Q",
+    "date": "2026-10-17",
+    "tag": "練習試合",
+    "team": "vs ピュアチャンプス"
+  },
+  {
+    "id": "DtHODKebpZA",
+    "title": "練習試合 vs ピュアチャンプス B戦 ③ 1Q",
+    "date": "2026-10-17",
+    "tag": "練習試合",
+    "team": "vs ピュアチャンプス"
+  },
+  {
+    "id": "iIdHI7HPmdY",
+    "title": "練習試合 vs ピュアチャンプス B戦 ③ 2Q",
+    "date": "2026-10-17",
+    "tag": "練習試合",
+    "team": "vs ピュアチャンプス"
+  },
+  {
+    "id": "77Fy4Kcob5Y",
+    "title": "練習試合 vs ピュアチャンプス B戦 ④ 1Q",
+    "date": "2026-10-17",
+    "tag": "練習試合",
+    "team": "vs ピュアチャンプス"
+  },
+  {
+    "id": "_jrCX023LCA",
+    "title": "練習試合 vs ピュアチャンプス B戦 ④ 2Q",
+    "date": "2026-10-17",
+    "tag": "練習試合",
+    "team": "vs ピュアチャンプス"
+  },
+  {
+    "id": "1w1TO7JkLt4",
+    "title": "練習試合 vs ピュアチャンプス B戦 ⑤",
+    "date": "2026-10-17",
+    "tag": "練習試合",
+    "team": "vs ピュアチャンプス"
+  },
+  {
+    "id": "6i1pVaFzRP0",
+    "title": "練習試合 vs ピュアチャンプス B戦 ⑥",
+    "date": "2026-10-17",
+    "tag": "練習試合",
+    "team": "vs ピュアチャンプス"
+  },
+  {
+    "id": "R4HXSIFOjO0",
+    "title": "練習試合 vs ピュアチャンプス B戦 ⑦",
+    "date": "2026-10-17",
+    "tag": "練習試合",
+    "team": "vs ピュアチャンプス"
+  },
+  {
     "id": "dI8f18K_MXg",
     "title": "新人戦決勝トーナメント 準決勝 vs 与進 試合前円陣",
     "date": "2026-10-11",
@@ -260,17 +365,17 @@
   },
   {
     "id": "8LODnNQU3zs",
-    "title": "KOSEI CUP vs PureChamps 1Q",
+    "title": "KOSEI CUP vs ピュアチャンプス 1Q",
     "date": "2026-09-23",
     "tag": "KOSEI CUP",
-    "team": "vs PureChamps"
+    "team": "vs ピュアチャンプス"
   },
   {
     "id": "014p5Lumuqk",
-    "title": "KOSEI CUP vs PureChamps 2Q",
+    "title": "KOSEI CUP vs ピュアチャンプス 2Q",
     "date": "2026-09-23",
     "tag": "KOSEI CUP",
-    "team": "vs PureChamps"
+    "team": "vs ピュアチャンプス"
   },
   {
     "id": "0wis6zUYu4k",
@@ -302,17 +407,17 @@
   },
   {
     "id": "IVUWZLLH6Tc",
-    "title": "KOSEI CUP vs PureChamps（2戦目） 1Q",
+    "title": "KOSEI CUP vs ピュアチャンプス（2戦目） 1Q",
     "date": "2026-09-23",
     "tag": "KOSEI CUP",
-    "team": "vs PureChamps（2戦目）"
+    "team": "vs ピュアチャンプス（2戦目）"
   },
   {
     "id": "xXTMn-aO3EI",
-    "title": "KOSEI CUP vs PureChamps（2戦目） 2Q",
+    "title": "KOSEI CUP vs ピュアチャンプス（2戦目） 2Q",
     "date": "2026-09-23",
     "tag": "KOSEI CUP",
-    "team": "vs PureChamps（2戦目）"
+    "team": "vs ピュアチャンプス（2戦目）"
   },
   {
     "id": "yeIdTY9AV_A",
@@ -372,31 +477,31 @@
   },
   {
     "id": "UzqPtf_ZEjg",
-    "title": "KOSEI CUP vs PureChamps B戦 1Q",
+    "title": "KOSEI CUP vs ピュアチャンプス B戦 1Q",
     "date": "2026-09-23",
     "tag": "KOSEI CUP",
-    "team": "vs PureChamps"
+    "team": "vs ピュアチャンプス"
   },
   {
     "id": "lH9hPEUgRrk",
-    "title": "KOSEI CUP vs PureChamps B戦 2Q",
+    "title": "KOSEI CUP vs ピュアチャンプス B戦 2Q",
     "date": "2026-09-23",
     "tag": "KOSEI CUP",
-    "team": "vs PureChamps"
+    "team": "vs ピュアチャンプス"
   },
   {
     "id": "7j5fkr25Lcs",
-    "title": "KOSEI CUP vs PureChamps（2戦目） B戦 1Q",
+    "title": "KOSEI CUP vs ピュアチャンプス（2戦目） B戦 1Q",
     "date": "2026-09-23",
     "tag": "KOSEI CUP",
-    "team": "vs PureChamps（2戦目）"
+    "team": "vs ピュアチャンプス（2戦目）"
   },
   {
     "id": "xQySODqt3Dg",
-    "title": "KOSEI CUP vs PureChamps（2戦目） B戦 2Q",
+    "title": "KOSEI CUP vs ピュアチャンプス（2戦目） B戦 2Q",
     "date": "2026-09-23",
     "tag": "KOSEI CUP",
-    "team": "vs PureChamps（2戦目）"
+    "team": "vs ピュアチャンプス（2戦目）"
   },
   {
     "id": "mhavZ5qJh90",
