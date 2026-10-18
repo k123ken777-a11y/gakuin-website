@@ -106,8 +106,17 @@ body { min-height: 100vh; }
   .tab-content { flex: 1; min-height: 0; overflow-y: auto; }
   .tab-content.active { display: flex; flex-direction: column; }
   .search-bar { flex-shrink: 0; }
-  .filter-row { flex-shrink: 0; }
   .team-bar { flex-shrink: 0; }
+  /* マウスだと横スクロールできず隠れたボタンを押せないため、
+     PCでは1行に収めず折り返して全部見せる。
+     .filter-row の基本設定はこの後ろにあり詳細度が同じだと
+     そちらが勝つので、.app を付けて打ち消す */
+  .app .filter-row {
+    flex-shrink: 0;
+    flex-wrap: wrap;
+    overflow-x: visible;
+    row-gap: 7px;
+  }
   .video-list { padding-bottom: 20px; }
   /* PC向けカード少し大きく。
      .thumb などの基本設定はこの後ろに書かれていて詳細度が同じだと
@@ -504,6 +513,7 @@ async function loadVideos() {
     buildIndex();
     document.getElementById('headerCount').textContent = videos.length + '本';
     renderFilters();
+    enableWheelScroll();
     renderTeams();
     renderList();
     renderFav();
@@ -518,6 +528,18 @@ function renderFilters() {
   document.getElementById('filterRow').innerHTML = getCategories().map(t =>
     `<div class="chip${selCategory===t?' active':''}" onclick="setFilter(this,'${esc(t)}')">${esc(t)}</div>`
   ).join('');
+}
+
+// 幅の狭いウィンドウではチップが1行に収まらないが、マウスのホイールは
+// 縦にしか効かない。行の上では縦回転を横スクロールに振り替える
+function enableWheelScroll() {
+  const row = document.getElementById('filterRow');
+  row.addEventListener('wheel', e => {
+    if (row.scrollWidth <= row.clientWidth) return;   // 全部見えていれば何もしない
+    if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return;
+    e.preventDefault();
+    row.scrollLeft += e.deltaY;
+  }, { passive: false });
 }
 
 function setFilter(el, t) {
