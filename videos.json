@@ -1,5 +1,75 @@
 [
   {
+    "id": "XUFo5xBF-Zg",
+    "title": "新人戦西部地区大会 vs 蜆塚中 試合前円陣",
+    "date": "2026-11-14",
+    "tag": "新人戦",
+    "team": "vs 蜆塚中"
+  },
+  {
+    "id": "uk8dQOeU4Gw",
+    "title": "新人戦西部地区大会 vs 蜆塚中 1Q",
+    "date": "2026-11-14",
+    "tag": "新人戦",
+    "team": "vs 蜆塚中"
+  },
+  {
+    "id": "n4khfPpOLTw",
+    "title": "新人戦西部地区大会 vs 蜆塚中 2Q",
+    "date": "2026-11-14",
+    "tag": "新人戦",
+    "team": "vs 蜆塚中"
+  },
+  {
+    "id": "29TSOt6vK9s",
+    "title": "新人戦西部地区大会 vs 蜆塚中 3Q",
+    "date": "2026-11-14",
+    "tag": "新人戦",
+    "team": "vs 蜆塚中"
+  },
+  {
+    "id": "VKULzH0yXIY",
+    "title": "新人戦西部地区大会 vs 蜆塚中 4Q",
+    "date": "2026-11-14",
+    "tag": "新人戦",
+    "team": "vs 蜆塚中"
+  },
+  {
+    "id": "EHw8XezpkAA",
+    "title": "新人戦西部地区大会 vs 積志中 試合前円陣",
+    "date": "2026-11-14",
+    "tag": "新人戦",
+    "team": "vs 積志中"
+  },
+  {
+    "id": "tZ0vVdY2EWY",
+    "title": "新人戦西部地区大会 vs 積志中 1Q",
+    "date": "2026-11-14",
+    "tag": "新人戦",
+    "team": "vs 積志中"
+  },
+  {
+    "id": "IgHEvkpn12Q",
+    "title": "新人戦西部地区大会 vs 積志中 2Q",
+    "date": "2026-11-14",
+    "tag": "新人戦",
+    "team": "vs 積志中"
+  },
+  {
+    "id": "3Az8qNdJCbg",
+    "title": "新人戦西部地区大会 vs 積志中 3Q",
+    "date": "2026-11-14",
+    "tag": "新人戦",
+    "team": "vs 積志中"
+  },
+  {
+    "id": "F7-rM1BUciY",
+    "title": "新人戦西部地区大会 vs 積志中 4Q",
+    "date": "2026-11-14",
+    "tag": "新人戦",
+    "team": "vs 積志中"
+  },
+  {
     "id": "jcaIlK4eGmc",
     "title": "新人戦西部地区大会 vs 八幡中 1Q（試合前円陣〜）",
     "date": "2026-11-07",
@@ -393,31 +463,31 @@
   },
   {
     "id": "aKEOua_CrX0",
-    "title": "新人戦決勝トーナメント 1回戦 vs 積志 1Q",
+    "title": "新人戦決勝トーナメント 1回戦 vs 積志中 1Q",
     "date": "2026-10-10",
     "tag": "新人戦",
-    "team": "vs 積志"
+    "team": "vs 積志中"
   },
   {
     "id": "08kjiR_q7zQ",
-    "title": "新人戦決勝トーナメント 1回戦 vs 積志 2Q",
+    "title": "新人戦決勝トーナメント 1回戦 vs 積志中 2Q",
     "date": "2026-10-10",
     "tag": "新人戦",
-    "team": "vs 積志"
+    "team": "vs 積志中"
   },
   {
     "id": "gf32hXPGigQ",
-    "title": "新人戦決勝トーナメント 1回戦 vs 積志 3Q",
+    "title": "新人戦決勝トーナメント 1回戦 vs 積志中 3Q",
     "date": "2026-10-10",
     "tag": "新人戦",
-    "team": "vs 積志"
+    "team": "vs 積志中"
   },
   {
     "id": "GZB0s8VbtBE",
-    "title": "新人戦決勝トーナメント 1回戦 vs 積志 4Q",
+    "title": "新人戦決勝トーナメント 1回戦 vs 積志中 4Q",
     "date": "2026-10-10",
     "tag": "新人戦",
-    "team": "vs 積志"
+    "team": "vs 積志中"
   },
   {
     "id": "Cl6P-h-hZrA",
@@ -2010,31 +2080,31 @@
   },
   {
     "id": "9a2Y-9jNRTo",
-    "title": "会長杯西部地区予選 vs 蜆塚 ①",
+    "title": "会長杯西部地区予選 vs 蜆塚中 ①",
     "date": "2026-05-09",
     "tag": "会長杯",
-    "team": "vs 蜆塚"
+    "team": "vs 蜆塚中"
   },
   {
     "id": "1XDyRaGrmi4",
-    "title": "会長杯西部地区予選 vs 蜆塚 ②",
+    "title": "会長杯西部地区予選 vs 蜆塚中 ②",
     "date": "2026-05-09",
     "tag": "会長杯",
-    "team": "vs 蜆塚"
+    "team": "vs 蜆塚中"
   },
   {
     "id": "sEOduAb-xcA",
-    "title": "会長杯西部地区予選 vs 蜆塚 ③",
+    "title": "会長杯西部地区予選 vs 蜆塚中 ③",
     "date": "2026-05-09",
     "tag": "会長杯",
-    "team": "vs 蜆塚"
+    "team": "vs 蜆塚中"
   },
   {
     "id": "hRqQ7t2CfVs",
-    "title": "会長杯西部地区予選 vs 蜆塚 ④",
+    "title": "会長杯西部地区予選 vs 蜆塚中 ④",
     "date": "2026-05-09",
     "tag": "会長杯",
-    "team": "vs 蜆塚"
+    "team": "vs 蜆塚中"
   },
   {
     "id": "dDbcB-5RrdI",
