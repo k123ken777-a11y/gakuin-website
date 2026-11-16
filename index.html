@@ -206,6 +206,9 @@ body { min-height: 100vh; }
   animation: celeFade 0.3s ease both;
 }
 .celebrate.closing { animation: celeFadeOut 0.4s ease both; }
+/* display:flex は [hidden] の display:none より優先されてしまうため、
+   詳細度を上げて明示的に隠す。これが無いと閉じても消えない */
+.celebrate[hidden] { display: none; }
 @keyframes celeFade { from { opacity: 0 } to { opacity: 1 } }
 @keyframes celeFadeOut { to { opacity: 0 } }
 
@@ -439,7 +442,7 @@ body { min-height: 100vh; }
       <div class="celebrate-main">優勝おめでとう！</div>
       <div class="celebrate-sub">2026 新人戦 西部地区大会</div>
       <div class="celebrate-team">浜松学院興誠中学校 女子バスケットボール部</div>
-      <button class="celebrate-close" type="button" onclick="hideCelebrate()">閉じる</button>
+      <button class="celebrate-close" type="button" onclick="event.stopPropagation();hideCelebrate()">閉じる</button>
     </div>
   </div>
 
@@ -673,16 +676,24 @@ function withinCelebration() {
 
 const PIECE_COLORS = ['#ef6a90', '#ffa26b', '#f2751f', '#ffd166', '#8ad2c0', '#b9aefc'];
 
+let celeClosing = false;
 function hideCelebrate() {
   const el = document.getElementById('celebrate');
-  if (!el || el.hidden) return;
+  if (!el || el.hidden || celeClosing) return;
+  celeClosing = true;
   el.classList.add('closing');
-  setTimeout(() => { el.hidden = true; el.classList.remove('closing'); }, 400);
+  setTimeout(() => {
+    el.hidden = true;
+    el.classList.remove('closing');
+    celeClosing = false;
+  }, 400);
 }
 
 function startCelebration() {
   // 期限切れなら帯ごと消す
   if (!withinCelebration()) {
+    const el = document.getElementById('celebrate');
+    if (el) el.remove();
     const bar = document.querySelector('.trophy-bar');
     if (bar) bar.remove();
     return;
