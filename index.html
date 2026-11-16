@@ -245,10 +245,13 @@ body { min-height: 100vh; }
 .celebrate-sub  { margin-top: 7px; font-size: 14px; font-weight: 700; color: #8a3b00; }
 .celebrate-team { margin-top: 4px; font-size: 11px; color: #a3806a; }
 .celebrate-close {
-  margin-top: 16px; border: 1px solid rgba(180,100,40,0.3); background: #fff;
-  color: #8a5520; font-size: 12px; font-weight: 700; font-family: inherit;
-  padding: 7px 20px; border-radius: 20px; cursor: pointer;
+  margin-top: 18px; border: 1px solid rgba(180,100,40,0.3); background: #fff;
+  color: #8a5520; font-size: 13px; font-weight: 700; font-family: inherit;
+  /* 指で押しやすいよう高さ44px以上を確保する */
+  min-height: 44px; min-width: 120px; padding: 10px 26px;
+  border-radius: 24px; cursor: pointer;
 }
+.celebrate-close:active { background: #fff3e4; }
 
 /* 動きを抑える設定の端末では、紙吹雪と跳ねる動きを止める */
 @media (prefers-reduced-motion: reduce) {
