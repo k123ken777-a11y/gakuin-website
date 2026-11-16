@@ -198,6 +198,62 @@ body { min-height: 100vh; }
   box-shadow: 0 2px 8px rgba(239,106,144,0.45);
 }
 
+/* お祝い表示 */
+.celebrate {
+  position: fixed; inset: 0; z-index: 200;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(55,25,10,0.5);
+  animation: celeFade 0.3s ease both;
+}
+.celebrate.closing { animation: celeFadeOut 0.4s ease both; }
+@keyframes celeFade { from { opacity: 0 } to { opacity: 1 } }
+@keyframes celeFadeOut { to { opacity: 0 } }
+
+.celebrate-pieces { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.piece {
+  position: absolute; top: -8%; width: 9px; height: 14px; border-radius: 2px;
+  animation: celeFall linear forwards;
+}
+@keyframes celeFall {
+  from { transform: translateY(0) rotate(0deg); opacity: 1; }
+  to   { transform: translateY(115vh) rotate(720deg); opacity: 0.9; }
+}
+
+.celebrate-card {
+  position: relative; text-align: center;
+  width: min(360px, 86vw); max-width: 86%;
+  padding: 30px 26px 22px; border-radius: 22px;
+  background: linear-gradient(160deg, #fffdf8 0%, #fff4e2 100%);
+  box-shadow: 0 18px 50px rgba(60,25,0,0.35);
+  animation: celePop 0.5s cubic-bezier(0.2, 1.3, 0.4, 1) both;
+}
+@keyframes celePop {
+  from { transform: scale(0.72) translateY(14px); opacity: 0; }
+  to   { transform: scale(1) translateY(0); opacity: 1; }
+}
+.celebrate-trophy { font-size: 52px; line-height: 1; animation: celeBounce 1.4s ease-in-out infinite; }
+@keyframes celeBounce { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-8px) } }
+.celebrate-main {
+  margin-top: 10px; font-size: 25px; font-weight: 700; letter-spacing: 0.5px;
+  background: linear-gradient(95deg, #e2557f 0%, #ec6d57 55%, #e07f2c 100%);
+  -webkit-background-clip: text; background-clip: text;
+  color: #c2456d; -webkit-text-fill-color: transparent;
+}
+.celebrate-sub  { margin-top: 7px; font-size: 14px; font-weight: 700; color: #8a3b00; }
+.celebrate-team { margin-top: 4px; font-size: 11px; color: #a3806a; }
+.celebrate-close {
+  margin-top: 16px; border: 1px solid rgba(180,100,40,0.3); background: #fff;
+  color: #8a5520; font-size: 12px; font-weight: 700; font-family: inherit;
+  padding: 7px 20px; border-radius: 20px; cursor: pointer;
+}
+
+/* 動きを抑える設定の端末では、紙吹雪と跳ねる動きを止める */
+@media (prefers-reduced-motion: reduce) {
+  .piece { display: none; }
+  .celebrate-trophy { animation: none; }
+  .celebrate-card { animation: celeFade 0.3s ease both; }
+}
+
 /* 戦績の帯 */
 .trophy-bar {
   display: flex; align-items: center; gap: 9px;
@@ -373,6 +429,18 @@ body { min-height: 100vh; }
       </div>
     </div>
     <div class="header-count" id="headerCount">読込中…</div>
+  </div>
+
+  <!-- お祝い表示。CELEBRATE_UNTIL までのあいだ、開くたびに数秒出る -->
+  <div class="celebrate" id="celebrate" hidden>
+    <div class="celebrate-pieces" id="celebratePieces" aria-hidden="true"></div>
+    <div class="celebrate-card" role="status">
+      <div class="celebrate-trophy">🏆</div>
+      <div class="celebrate-main">優勝おめでとう！</div>
+      <div class="celebrate-sub">2026 新人戦 西部地区大会</div>
+      <div class="celebrate-team">浜松学院興誠中学校 女子バスケットボール部</div>
+      <button class="celebrate-close" type="button" onclick="hideCelebrate()">閉じる</button>
+    </div>
   </div>
 
   <!-- 戦績の帯。不要になったらこの div ごと消せばよい。
@@ -591,6 +659,61 @@ function setFilter(el, t) {
   renderList();
 }
 
+// ─── 優勝のお祝い ─────────────────────────────────
+// この日を過ぎると、ヘッダー下の帯もお祝い表示も自動で出なくなる。
+// 次の大会で出したくなったら、この日付と文言を直すだけでよい。
+const CELEBRATE_UNTIL = '2026-11-23';
+
+function withinCelebration() {
+  const t = new Date();
+  const today = t.getFullYear() + '-' + String(t.getMonth() + 1).padStart(2, '0')
+              + '-' + String(t.getDate()).padStart(2, '0');
+  return today <= CELEBRATE_UNTIL;
+}
+
+const PIECE_COLORS = ['#ef6a90', '#ffa26b', '#f2751f', '#ffd166', '#8ad2c0', '#b9aefc'];
+
+function hideCelebrate() {
+  const el = document.getElementById('celebrate');
+  if (!el || el.hidden) return;
+  el.classList.add('closing');
+  setTimeout(() => { el.hidden = true; el.classList.remove('closing'); }, 400);
+}
+
+function startCelebration() {
+  // 期限切れなら帯ごと消す
+  if (!withinCelebration()) {
+    const bar = document.querySelector('.trophy-bar');
+    if (bar) bar.remove();
+    return;
+  }
+  const el = document.getElementById('celebrate');
+  if (!el) return;
+
+  const box = document.getElementById('celebratePieces');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduce) {
+    const frag = document.createDocumentFragment();
+    for (let i = 0; i < 70; i++) {
+      const p = document.createElement('div');
+      p.className = 'piece';
+      p.style.left = Math.random() * 100 + '%';
+      p.style.background = PIECE_COLORS[i % PIECE_COLORS.length];
+      p.style.animationDuration = (2.4 + Math.random() * 2.2) + 's';
+      p.style.animationDelay = (Math.random() * 1.6) + 's';
+      p.style.opacity = 0.75 + Math.random() * 0.25;
+      if (i % 3 === 0) p.style.borderRadius = '50%';
+      frag.appendChild(p);
+    }
+    box.appendChild(frag);
+  }
+
+  el.hidden = false;
+  el.addEventListener('click', hideCelebrate);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') hideCelebrate(); });
+  setTimeout(hideCelebrate, reduce ? 2600 : 5000);
+}
+
 // 戦績の帯から、その大会の動画一覧へ
 function showTournament(word) {
   switchTab('list');
@@ -750,6 +873,7 @@ function switchTab(name) {
 
 // ─── Boot ─────────────────────────────────────────────────
 loadVideos();
+startCelebration();
 </script>
 </body>
 </html>
