@@ -376,13 +376,15 @@ body { min-height: 100vh; }
   </div>
 
   <!-- 戦績の帯。不要になったらこの div ごと消せばよい。
-       文言を変えるときは下の2か所（表示文字と、押したときの検索語）を直す -->
-  <div class="trophy-bar" onclick="showTournament('西部地区大会')"
+       文言を変えるときは下の2か所（表示文字と、押したときの検索語）を直す。
+       検索語は空白区切りのAND検索。「決勝」は「準決勝」にも含まれてしまうため、
+       相手名を足して決勝の5本だけに絞っている -->
+  <div class="trophy-bar" onclick="showTournament('西部地区大会 決勝 開誠館')"
        role="button" tabindex="0"
        onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}">
     <span class="trophy-icon">🏆</span>
     <span class="trophy-text">2026 新人戦 西部地区大会 <b>優勝</b></span>
-    <span class="trophy-go">試合を見る ›</span>
+    <span class="trophy-go">決勝を見る ›</span>
   </div>
 
   <!-- Player -->
