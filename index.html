@@ -73,9 +73,10 @@ body { min-height: 100vh; }
     max-width: none; width: 100%;
     display: grid;
     grid-template-columns: 1fr clamp(420px, 34vw, 720px);
-    grid-template-rows: auto auto auto 1fr;
+    grid-template-rows: auto auto auto auto 1fr;
     grid-template-areas:
       "header   header"
+      "trophy   trophy"
       "player   sidebar"
       "nowplay  sidebar"
       "filler   sidebar";
@@ -83,6 +84,7 @@ body { min-height: 100vh; }
     overflow: hidden;
   }
   .header      { grid-area: header; }
+  .trophy-bar  { grid-area: trophy; }
   /* 16:9 を保ちつつ、画面が広いときに縦に伸びすぎないよう高さを制限する。
      min-width:0 を入れないと、16:9 と min-height の掛け合わせで
      必要幅が決まってしまい、横スクロールが出る */
@@ -194,6 +196,31 @@ body { min-height: 100vh; }
   color: #fff; font-size: 11px; font-weight: 700;
   padding: 5px 11px; border-radius: 20px; position: relative; z-index: 1;
   box-shadow: 0 2px 8px rgba(239,106,144,0.45);
+}
+
+/* 戦績の帯 */
+.trophy-bar {
+  display: flex; align-items: center; gap: 9px;
+  padding: 9px 16px; cursor: pointer; user-select: none;
+  background: linear-gradient(100deg, #ffd98a 0%, #ffc45c 45%, #ffb347 100%);
+  border-bottom: 1px solid rgba(150,90,10,0.22);
+  color: #6b4406;
+}
+.trophy-bar:active { filter: brightness(0.96); }
+.trophy-icon { font-size: 17px; line-height: 1; flex-shrink: 0; }
+.trophy-text {
+  flex: 1; min-width: 0; font-size: 12.5px; font-weight: 700; letter-spacing: 0.2px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.trophy-text b { color: #8a3b00; font-weight: 700; }
+.trophy-go { flex-shrink: 0; font-size: 11px; font-weight: 700; opacity: 0.75; }
+@media (prefers-color-scheme: dark) {
+  .trophy-bar {
+    background: linear-gradient(100deg, #6b4f17 0%, #7d5a17 45%, #8a5f14 100%);
+    border-bottom-color: rgba(0,0,0,0.3);
+    color: #ffe3a8;
+  }
+  .trophy-text b { color: #ffd37a; }
 }
 
 /* Player */
@@ -346,6 +373,16 @@ body { min-height: 100vh; }
       </div>
     </div>
     <div class="header-count" id="headerCount">読込中…</div>
+  </div>
+
+  <!-- 戦績の帯。不要になったらこの div ごと消せばよい。
+       文言を変えるときは下の2か所（表示文字と、押したときの検索語）を直す -->
+  <div class="trophy-bar" onclick="showTournament('西部地区大会')"
+       role="button" tabindex="0"
+       onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}">
+    <span class="trophy-icon">🏆</span>
+    <span class="trophy-text">2026 新人戦 西部地区大会 <b>優勝</b></span>
+    <span class="trophy-go">試合を見る ›</span>
   </div>
 
   <!-- Player -->
@@ -550,6 +587,20 @@ function setFilter(el, t) {
   if (selTeam && !teamsFor(selCategory).some(([name]) => name === selTeam)) selTeam = '';
   renderTeams();
   renderList();
+}
+
+// 戦績の帯から、その大会の動画一覧へ
+function showTournament(word) {
+  switchTab('list');
+  selTeam = '';
+  const all = [...document.querySelectorAll('#filterRow .chip')].find(c => c.textContent === 'すべて');
+  if (all) setFilter(all, 'すべて');
+  const si = document.getElementById('searchInput');
+  si.value = word;
+  si.dispatchEvent(new Event('input'));
+  renderTeams();
+  renderList();
+  document.querySelector('.tab-bar').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function setTeam(t) {
